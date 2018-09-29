@@ -1,0 +1,77 @@
+<div>          
+  <h1 class="h3 mb-3 font-weight-normal text-center">
+      <ng-container *ngIf="book.bookID && book.bookID > 0">Edit Book</ng-container>
+      <ng-container *ngIf="!book.bookID || book.bookID === 0">Add Book</ng-container>    
+  </h1>
+  <div class="book-edit-form">
+    <form [formGroup]="bookEditForm" (ngSubmit)="save()">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Title:</label>
+        <div class="col-sm-9"> 
+          <input type="text" placeholder="Title" formControlName="title" class="form-control" 
+                 [ngClass]="{'is-invalid': bookEditForm.controls.title.touched && !bookEditForm.controls.title.valid}"/>   
+          <div *ngIf="bookEditForm.controls.title.hasError('required') && bookEditForm.controls.title.touched" class='text-danger'>Field required</div>  
+          <div *ngIf="bookEditForm.controls.title.errors?.maxlength && bookEditForm.controls.title.touched" 
+                class='text-danger'>The field cannot contain more than 100 characters</div>                                  
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Release date:</label>
+        <div class="col-sm-9">                 
+            <input type="text" placeholder="Release date" formControlName="releaseDate" class="form-control" #dp="bsDatepicker" bsDatepicker
+                   [maxDate]="maxDate" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
+                   [ngClass]="{'is-invalid': bookEditForm.controls.releaseDate.touched && !bookEditForm.controls.releaseDate.valid}" /> 
+            <div *ngIf="bookEditForm.controls.releaseDate.hasError('required') && bookEditForm.controls.releaseDate.touched" class='text-danger'>Field required</div>  
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Author(s):</label>
+        <div class="col-sm-9">   
+          <select formControlName="authorIds" multiple="multiple" class="form-control"
+                 [ngClass]="{'is-invalid': bookEditForm.controls.authorIds.touched && !bookEditForm.controls.authorIds.valid}" >
+              <option *ngFor="let author of authors" [value]="author.authorID">{{author.fullName}}</option>
+          </select> 
+          <div *ngIf="bookEditForm.controls.authorIds.hasError('required') && bookEditForm.controls.authorIds.touched" class='text-danger'>Field required</div>                                                                                                 
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Publisher:</label>
+        <div class="col-sm-9">        
+            <select formControlName="publisherID" class="form-control"
+                   [ngClass]="{'is-invalid': bookEditForm.controls.publisherID.touched && !bookEditForm.controls.publisherID.valid}">
+                <option [value]="0">-- select publisher --</option>
+                <option *ngFor="let publisher of publishers" [value]="publisher.publisherID">{{publisher.name}}</option>
+            </select>   
+            <div *ngIf="bookEditForm.controls.publisherID.hasError('min') && bookEditForm.controls.publisherID.touched" class='text-danger'>Field required</div>                                                      
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Additional Information:</label>
+        <div class="col-sm-9">   
+          <textarea formControlName="additionalInformation" placeholder="Additional Information" class="form-control"
+          [ngClass]="{'is-invalid': bookEditForm.controls.additionalInformation.touched && !bookEditForm.controls.additionalInformation.valid}"></textarea>   
+          <div *ngIf="bookEditForm.controls.additionalInformation.errors?.maxlength && bookEditForm.controls.additionalInformation.touched" 
+                class='text-danger'>The field cannot contain more than 1000 characters</div>      
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-offset-3 col-sm-9">
+            <span [ngStyle]="{ 'margin-right': '20px' }">
+                <button class="btn btn-primary" type="submit">                  
+                  <ng-container *ngIf="book.bookID && book.bookID > 0">Update</ng-container>
+                  <ng-container *ngIf="!book.bookID || book.bookID === 0">Add</ng-container>    
+                </button>
+            </span>
+            <button *ngIf="!book.bookID || book.bookID === 0" class="btn btn-secondary" (click)="redirectToBooksList()">Return</button>
+            <button *ngIf="book.bookID && book.bookID > 0" class="btn btn-secondary" (click)="cancelEdit.emit()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+</div>

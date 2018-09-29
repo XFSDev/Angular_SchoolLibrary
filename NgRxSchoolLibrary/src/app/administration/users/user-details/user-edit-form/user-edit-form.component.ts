@@ -1,0 +1,89 @@
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { IUser } from '../../user.model';
+import { IUserRole } from '../../user-role.model';
+import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { IUserUpdateResult } from '../user-update-result.model';
+
+function passwordCompare(c: AbstractControl): { [key: string]: boolean } | null {
+  const passwordControl = c.get('password');
+  const passwordConfirmControl = c.get('passwordConfirm');
+
+  if (passwordControl.value === passwordConfirmControl.value) {
+      return null;
+  }
+  return { 'confirm': true };
+}
+
+function idValidator(c: AbstractControl): { [key: string]: boolean } | null {
+  return c.value > 0 ? null : { 'id': true };
+}
+
+function requiredPasswordValidator(userID: number): ValidatorFn {
+  return (c: AbstractControl): { [key: string]: boolean } | null => {
+    if (userID === 0) {
+      return !!c.value && c.value.length > 0 ? null : { 'required': true};
+    }
+
+    return null;
+  };
+}
+
+@Component({
+  selector: 'user-edit-form',
+  templateUrl: './user-edit-form.component.html',
+  styleUrls: ['./user-edit-form.component.css']
+})
+export class UserEditFormComponent implements OnInit {
+  @Input() user: IUser;
+  @Input() roles: IUserRole[];
+  @Input() userUpdateResult: IUserUpdateResult;
+
+  @Output() saveUser = new EventEmitter<IUser>();
+  @Output() cancelEdit = new EventEmitter<void>();
+
+  public userEditForm: FormGroup;  
+
+  constructor(private _router: Router, private _fb: FormBuilder) { }
+
+  ngOnInit() {
+    this.userEditForm = this._fb.group({
+      userID: [this.user.userID],     
+      userName: [this.user.userName, [Validators.required, Validators.maxLength(50)]],
+      passwordGroup: this._fb.group({
+        password: ['', [Validators.maxLength(128), requiredPasswordValidator(this.user.userID)]],
+        passwordConfirm: ['', [Validators.maxLength(128)]],
+      }, { validator: passwordCompare }),
+      firstName: [this.user.firstName, [Validators.required, Validators.maxLength(50)]],
+      lastName: [this.user.lastName, [Validators.required, Validators.maxLength(50)]],
+      email: [this.user.email, [Validators.email, Validators.maxLength(100)]],
+      address: [this.user.address, Validators.maxLength(200)],
+      dateOfBirth: [this.user.dateOfBirth],
+      role: [+this.user.role, [Validators.required, idValidator]]
+    });
+  }
+
+  public redirectToUsersList() {
+    this._router.navigate(['/administration/users']);
+  }
+
+  public save() {    
+    for (const field in this.userEditForm.controls) {
+      const control = this.userEditForm.get(field);
+      control.markAsTouched( {onlySelf: true } );
+    }
+
+    this.userEditForm.get('passwordGroup.password').markAsTouched({ onlySelf: true });
+    this.userEditForm.get('passwordGroup.passwordConfirm').markAsTouched({ onlySelf: true });
+
+    if (this.userEditForm.valid) {
+      const user = <IUser> {        
+        password: this.userEditForm.value.passwordGroup.password,
+        passwordConfirm: this.userEditForm.value.passwordGroup.passwordConfirm,
+        ...this.userEditForm.value
+      };
+
+      this.saveUser.emit(user);
+    }
+  }
+}

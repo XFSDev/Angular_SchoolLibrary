@@ -1,0 +1,10 @@
+<div *ngIf="!user">
+  Loading...
+</div>
+
+<ng-container *ngIf="!!user">  
+  <user-details-form *ngIf="!isEditMode" [user]="user" (edit)="edit($event)"></user-details-form>
+
+  <user-edit-form *ngIf="isEditMode" [user]="user" [roles]="roles" [userUpdateResult]="userUpdateResult" 
+                  (saveUser)="save($event)" (cancelEdit)="cancelEdit($event)"></user-edit-form>
+</ng-container>

@@ -1,0 +1,13 @@
+<div *ngIf="!book || !authors || !publishers">
+    Loading...
+</div>
+
+<ng-container *ngIf="!!book && !!authors && !!publishers">
+
+    <book-details-form *ngIf="!!book && !isEditMode" [book]="book" [showEditButton]="authService.canEditBook()"
+    (edit)="edit($event)"></book-details-form>
+
+    <book-edit-form *ngIf="!!book && isEditMode" [book]="book" 
+        [authors]="authors" [publishers]="publishers" (saveBook)="save($event)" (cancelEdit)="cancelEdit($event)"></book-edit-form>
+
+</ng-container>

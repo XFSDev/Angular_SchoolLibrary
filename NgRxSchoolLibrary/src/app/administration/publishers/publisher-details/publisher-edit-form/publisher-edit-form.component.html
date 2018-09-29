@@ -1,0 +1,55 @@
+<div>          
+    <h1 class="h3 mb-3 font-weight-normal text-center">
+        <ng-container *ngIf="publisher.publisherID && publisher.publisherID > 0">Edit Publisher</ng-container>
+        <ng-container *ngIf="!publisher.publisherID || publisher.publisherID === 0">Add Publisher</ng-container>    
+    </h1>
+    <div class="publisher-edit-form">
+      <form [formGroup]="publisherEditForm" (ngSubmit)="save()">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Name:</label>
+          <div class="col-sm-9"> 
+            <input type="text" placeholder="Name" formControlName="name" class="form-control" 
+                   [ngClass]="{'is-invalid': publisherEditForm.controls.name.touched && !publisherEditForm.controls.name.valid}"/>   
+            <div *ngIf="publisherEditForm.controls.name.hasError('required') && publisherEditForm.controls.name.touched" class='text-danger'>Field required</div>  
+            <div *ngIf="publisherEditForm.controls.name.errors?.maxlength && publisherEditForm.controls.name.touched" 
+                  class='text-danger'>The field cannot contain more than 50 characters</div>                                  
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Address:</label>
+          <div class="col-sm-9"> 
+            <input type="text" placeholder="Address" formControlName="address" class="form-control" 
+                   [ngClass]="{'is-invalid': publisherEditForm.controls.address.touched && !publisherEditForm.controls.address.valid}"/>   
+            <div *ngIf="publisherEditForm.controls.address.hasError('required') && publisherEditForm.controls.address.touched" class='text-danger'>Field required</div>  
+            <div *ngIf="publisherEditForm.controls.address.errors?.maxlength && publisherEditForm.controls.address.touched" 
+                  class='text-danger'>The field cannot contain more than 200 characters</div>                                  
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Additional Information:</label>
+          <div class="col-sm-9">   
+            <textarea formControlName="additionalInformation" placeholder="Additional Information" class="form-control"
+            [ngClass]="{'is-invalid': publisherEditForm.controls.additionalInformation.touched && !publisherEditForm.controls.additionalInformation.valid}"></textarea>   
+            <div *ngIf="publisherEditForm.controls.additionalInformation.errors?.maxlength && publisherEditForm.controls.additionalInformation.touched" 
+                  class='text-danger'>The field cannot contain more than 1000 characters</div>      
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <div class="col-sm-offset-3 col-sm-9">
+              <span [ngStyle]="{ 'margin-right': '20px' }">
+                  <button class="btn btn-primary" type="submit">                  
+                    <ng-container *ngIf="publisher.publisherID && publisher.publisherID > 0">Update</ng-container>
+                    <ng-container *ngIf="!publisher.publisherID || publisher.publisherID === 0">Add</ng-container>    
+                  </button>
+              </span>
+              <button *ngIf="!publisher.publisherID || publisher.publisherID === 0" class="btn btn-secondary" (click)="redirectToPublishersList()">Return</button>
+              <button *ngIf="publisher.publisherID && publisher.publisherID > 0" class="btn btn-secondary" (click)="cancelEdit.emit()">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    
+  </div>
