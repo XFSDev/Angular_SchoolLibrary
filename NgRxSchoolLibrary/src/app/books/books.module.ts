@@ -18,6 +18,9 @@ import { reducer } from './state/book.reducer';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { BookEffects } from './state/book.effects';
+import { BookFacade } from './state/book.facade';
+import { BooksGuard } from './books.guard';
+import { BooksService } from './books.service';
 
 
 @NgModule({
@@ -38,6 +41,6 @@ import { BookEffects } from './state/book.effects';
     BookDetailsFormComponent,
     BookEditFormComponent
   ],
-  providers: []
+  providers: [BooksService, BookFacade, BooksGuard]
 })
 export class BooksModule { }

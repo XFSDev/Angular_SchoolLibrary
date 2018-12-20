@@ -16,11 +16,17 @@ export interface IBookState {
     bookDeletedShowInfo: boolean;
 
     book: IBook;
+    isEditMode: boolean;
 }
 
 const initialState: IBookState = {
     bookStatuses: [],
-    booksSearchFilter: null,
+    booksSearchFilter: {
+        authorID: 0,
+        onlyAvailable: false,
+        publisherID: 0,
+        title: ''
+    },
     books: [],
     sortCriteria: {
         sortColumn: BookSortColumns.Title,
@@ -30,7 +36,8 @@ const initialState: IBookState = {
     bookRequstedShowInfo: false,
     bookDeletedShowInfo: false,
 
-    book: null
+    book: null,
+    isEditMode: false
 };
 
 const getBooksState = createFeatureSelector<IBookState>('books');
@@ -43,6 +50,11 @@ export const getBooksSearchFilter = createSelector(
 export const getBooks = createSelector(
     getBooksState,
     state => state.books
+);
+
+export const getBook = createSelector(
+    getBooksState,
+    state => state.book
 );
 
 export const getBooksSortCriteria = createSelector(
@@ -60,6 +72,11 @@ export const getBookDeletedShowInfo = createSelector(
     state => state.bookDeletedShowInfo
 );
 
+export const getIsEditMode = createSelector(
+    getBooksState,
+    state => state.isEditMode
+);
+
 export function reducer(state: IBookState = initialState, action: Actions): IBookState {
     switch (action.type) {
         case ActionTypes.FilterBooks:
@@ -68,12 +85,16 @@ export function reducer(state: IBookState = initialState, action: Actions): IBoo
             return Object.assign({}, state, {
                 books: action.payload
             });
+        case ActionTypes.LoadBookSuccess:
+            return { ...state, book: action.payload};
         case ActionTypes.SortBooks:
             return { ...state, sortCriteria: action.payload };
         case ActionTypes.RequestBookSuccessShowInfo:
             return { ...state, bookRequstedShowInfo: action.payload };
         case ActionTypes.DeleteBookSuccessShowInfo:
             return { ...state, bookDeletedShowInfo: action.payload };
+        case ActionTypes.SetEditMode:
+            return { ...state, isEditMode: action.payload };
         default:
             return state;
     }

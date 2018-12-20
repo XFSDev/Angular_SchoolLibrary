@@ -32,6 +32,10 @@ import { UsersTableComponent } from './users/users-list/users-table/users-table.
 import { UserDetailsComponent } from './users/user-details/user-details.component';
 import { UserDetailsFormComponent } from './users/user-details/user-details-form/user-details-form.component';
 import { UserEditFormComponent } from './users/user-details/user-edit-form/user-edit-form.component';
+import { reducer } from './state/administration.reducer';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { AdministrationEffects } from './state/administration.effects';
 
 @NgModule({
   imports: [
@@ -39,7 +43,10 @@ import { UserEditFormComponent } from './users/user-details/user-edit-form/user-
     RouterModule.forChild(administrationRoutes),
     ReactiveFormsModule,
     BsDatepickerModule,
-    HttpClientModule
+    HttpClientModule,
+
+    StoreModule.forFeature('administration', reducer),
+    EffectsModule.forFeature([AdministrationEffects])
   ],
   declarations: [
     AuthorsListComponent,

@@ -1,13 +1,19 @@
-<div *ngIf="!book || !authors || !publishers">
-    Loading...
+<div *ngIf="(book$ | async) as book; else: loading">
+  <book-details-form
+    *ngIf="!isEditMode"
+    [book]="book"
+    [showEditButton]="authService.canEditBook()"
+    (edit)="edit($event)"
+  ></book-details-form>
+
+  <book-edit-form
+    *ngIf="isEditMode"
+    [book]="book"
+    [authors]="authors$ | async"
+    [publishers]="publishers$ | async"
+    (saveBook)="save($event)"
+    (cancelEdit)="cancelEdit($event)"
+  ></book-edit-form>
 </div>
 
-<ng-container *ngIf="!!book && !!authors && !!publishers">
-
-    <book-details-form *ngIf="!!book && !isEditMode" [book]="book" [showEditButton]="authService.canEditBook()"
-    (edit)="edit($event)"></book-details-form>
-
-    <book-edit-form *ngIf="!!book && isEditMode" [book]="book" 
-        [authors]="authors" [publishers]="publishers" (saveBook)="save($event)" (cancelEdit)="cancelEdit($event)"></book-edit-form>
-
-</ng-container>
+<ng-template #loading> Loading... </ng-template>

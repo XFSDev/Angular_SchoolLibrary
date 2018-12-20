@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './navbar/nav-bar/nav-bar.component';
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './authentication/login/login.component';
 import { LoginInfoComponent } from './navbar/login-info/login-info.component';
 import { appRoutes } from './routes';
 
@@ -15,7 +14,6 @@ describe('AppComponent', () => {
         AppComponent,
         NavBarComponent,
         HomeComponent,
-        LoginComponent,
         LoginInfoComponent
       ],
       imports: [

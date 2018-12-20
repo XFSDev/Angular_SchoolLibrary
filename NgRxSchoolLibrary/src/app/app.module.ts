@@ -8,7 +8,6 @@ import { appRoutes } from './routes';
 import { LoginInfoComponent } from './navbar/login-info/login-info.component';
 import { NavBarComponent } from './navbar/nav-bar/nav-bar.component';
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './authentication/login/login.component';
 import { AuthenticationService } from './authentication/authentication.service';
 import { AuthenticationInterceptor } from './authentication/authentication.interceptor';
 import { BooksModule } from './books/books.module';
@@ -19,9 +18,13 @@ import { BooksService } from './books/books.service';
 import { UsersService } from './administration/users/users.service';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
-import { reducer } from './state/app.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { MainEffects } from './state/app.effects';
+import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
+import { CustomSerializer } from './router/custom-serializer';
+import { reducers } from './state/app.reducer';
+import { AppFacade } from './state/app.facade';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @NgModule({
   imports: [
@@ -30,7 +33,9 @@ import { MainEffects } from './state/app.effects';
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule,
     BooksModule,
-    StoreModule.forRoot({ main: reducer }),
+    AuthenticationModule,
+    StoreModule.forRoot(reducers),
+    StoreRouterConnectingModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
     }),
@@ -40,17 +45,16 @@ import { MainEffects } from './state/app.effects';
     AppComponent,
     LoginInfoComponent,
     NavBarComponent,
-    HomeComponent,
-    LoginComponent
+    HomeComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
-    AuthenticationService,
+    { provide: RouterStateSerializer, useClass: CustomSerializer },
     LoansService,
     PublishersService,
     AuthorsService,
-    BooksService,
-    UsersService
+    UsersService,
+    AppFacade
   ],
   bootstrap: [AppComponent]
 })

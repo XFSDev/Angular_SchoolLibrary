@@ -2,6 +2,6 @@
     <h1 class="h3 mb-3 font-weight-normal text-center">Books</h1>
     <books-search-panel [publishers]="publishers$ | async" [authors]="authors$ | async" [showAddButton]="showAddButton" [filter]="booksSearchFilter"
         (filterBooksList)="filterBooks($event)"></books-search-panel>
-    <books-table [books]="filteredBooks" [showRequestBook]="showRequestBook" [showDeleteButton]="showDeleteButton"
+    <books-table [books]="filteredBooks$ | async" [showRequestBook]="showRequestBook" [showDeleteButton]="showDeleteButton"
         [sortColumn]="sortCriteria.sortColumn" (requestBook)="requestBook($event)" (deleteBook)="deleteBook($event)" (sortBooksList)="sortBooks($event)"></books-table>
 </div>
