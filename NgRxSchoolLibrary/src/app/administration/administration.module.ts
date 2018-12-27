@@ -9,9 +9,7 @@ import { AuthorsListComponent } from './authors/authors-list/containers/authors-
 import { administrationRoutes } from './routes';
 import { AuthorsSearchPanelComponent } from './authors/authors-list/components/authors-search-panel/authors-search-panel.component';
 import { AuthorsTableComponent } from './authors/authors-list/components/authors-table/authors-table.component';
-import { AuthorDetailsComponent } from './authors/author-details/author-details.component';
-import { AuthorDetailsFormComponent } from './authors/author-details/author-details-form/author-details-form.component';
-import { AuthorEditFormComponent } from './authors/author-details/author-edit-form/author-edit-form.component';
+import { AuthorDetailsComponent } from './authors/author-details/containers/author-details.component';
 
 import { AuthorsGuard } from './authors/authors.guard';
 import { AuthorGuard } from './authors/author.guard';
@@ -32,10 +30,13 @@ import { UsersTableComponent } from './users/users-list/users-table/users-table.
 import { UserDetailsComponent } from './users/user-details/user-details.component';
 import { UserDetailsFormComponent } from './users/user-details/user-details-form/user-details-form.component';
 import { UserEditFormComponent } from './users/user-details/user-edit-form/user-edit-form.component';
-import { reducer } from './state/authors/authors.reducer';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthorsEffects } from './state/authors/authors.effects';
+import { AuthorsEffects } from './authors/state/authors.effects';
+import { AuthorsFacade } from './authors/state/authors.facade';
+import { reducers } from './state/administration.reducer';
+import { AuthorDetailsFormComponent } from './authors/author-details/components/author-details-form/author-details-form.component';
+import { AuthorEditFormComponent } from './authors/author-details/components/author-edit-form/author-edit-form.component';
 
 @NgModule({
   imports: [
@@ -45,7 +46,7 @@ import { AuthorsEffects } from './state/authors/authors.effects';
     BsDatepickerModule,
     HttpClientModule,
 
-    StoreModule.forFeature('administration', reducer),
+    StoreModule.forFeature('administration', reducers),
     EffectsModule.forFeature([AuthorsEffects])
   ],
   declarations: [
@@ -69,6 +70,7 @@ import { AuthorsEffects } from './state/authors/authors.effects';
     UserEditFormComponent
   ],
   providers: [
+    AuthorsFacade,
     AuthorsGuard,
     AuthorGuard,
     PublisherGuard,

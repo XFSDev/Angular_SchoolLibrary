@@ -1,9 +1,0 @@
-<div *ngIf="!author">
-  Loading...
-</div>
-
-<ng-container *ngIf="!!author">  
-  <author-details-form *ngIf="!isEditMode" [author]="author" (edit)="edit($event)"></author-details-form>
-
-  <author-edit-form *ngIf="isEditMode" [author]="author" (saveAuthor)="save($event)" (cancelEdit)="cancelEdit($event)"></author-edit-form>
-</ng-container>

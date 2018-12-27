@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IAuthor } from '../../../../../shared/models/author.model';
-
+import { IAuthor } from 'src/app/shared/models/author.model';
 import { AuthorSortColumns } from '../../../models/author-sort-columns';
 
 @Component({
@@ -19,7 +18,5 @@ export class AuthorsTableComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() { }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { IAuthor } from '../../../../shared/models/author.model';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IAuthor } from 'src/app/shared/models/author.model';
 
 @Component({
   selector: 'author-details-form',
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AuthorDetailsFormComponent implements OnInit {
 
-  @Input() author: IAuthor; 
+  @Input() author: IAuthor;
 
   @Output() edit = new EventEmitter<void>();
 

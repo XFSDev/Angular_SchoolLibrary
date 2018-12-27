@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IAuthor } from '../../../../shared/models/author.model';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IAuthor } from 'src/app/shared/models/author.model';
 
 @Component({
   selector: 'author-edit-form',
@@ -12,7 +12,19 @@ export class AuthorEditFormComponent implements OnInit {
   @Input() author: IAuthor;
   @Output() saveAuthor = new EventEmitter<IAuthor>();
   @Output() cancelEdit = new EventEmitter<void>();
-  
+
+  public get firstName(): AbstractControl {
+    return this.authorEditForm.get('firstName');
+  }
+
+  public get lastName(): AbstractControl {
+    return this.authorEditForm.get('lastName');
+  }
+
+  public get additionalInformation(): AbstractControl {
+    return this.authorEditForm.get('additionalInformation');
+  }
+
   public authorEditForm: FormGroup;
 
   constructor(private _router: Router, private _fb: FormBuilder) { }
@@ -30,7 +42,7 @@ export class AuthorEditFormComponent implements OnInit {
     this._router.navigate(['/administration/authors']);
   }
 
-  public save() {    
+  public save() {
     for (const field in this.authorEditForm.controls) {
       const control = this.authorEditForm.get(field);
       control.markAsTouched( {onlySelf: true } );

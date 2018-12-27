@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthorsListComponent } from './authors/authors-list/containers/authors-list.component';
-import { AuthorDetailsComponent } from './authors/author-details/author-details.component';
+import { AuthorDetailsComponent } from './authors/author-details/containers/author-details.component';
 import { PublishersListComponent } from './publishers/publishers-list/containers/publishers-list.component';
 import { PublisherDetailsComponent } from './publishers/publisher-details/containers/publisher-details.component';
 import { UsersListComponent } from './users/users-list/users-list.component';

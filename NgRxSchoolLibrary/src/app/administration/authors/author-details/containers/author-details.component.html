@@ -1,0 +1,11 @@
+<div *ngIf="(author$ | async) as author; else: loading">
+  <author-edit-form *ngIf="isEditMode$ | async; else details;"
+    [author]="author" (saveAuthor)="save($event)" (cancelEdit)="cancelEdit($event)">
+  </author-edit-form>
+
+  <ng-template #details>
+    <author-details-form [author]="author" (edit)="edit($event)"></author-details-form>
+  </ng-template>
+</div>
+
+<ng-template #loading> Loading... </ng-template>

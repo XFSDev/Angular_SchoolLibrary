@@ -1,61 +1,64 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IAuthorSearchFilter } from '../../models/authors-search-filter.model';
 import { IAuthor } from '../../../../shared/models/author.model';
-import { AuthorsService } from '../../authors.service';
 
 import {AuthorSortColumns} from '../../models/author-sort-columns';
+import { AuthorsFacade } from '../../state/authors.facade';
+import { AppFacade } from 'src/app/state/app.facade';
+import { Observable } from 'rxjs';
+import { ISortCriteria } from 'src/app/shared/models/sort-criteria.model';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'authors-list',
   templateUrl: './authors-list.component.html',
   styleUrls: ['./authors-list.component.css']
 })
-export class AuthorsListComponent implements OnInit {
-  private _authors: IAuthor[];
-  private _authorsSearchFilter: IAuthorSearchFilter;
-  private _authorsSortDesc = true;
+export class AuthorsListComponent implements OnInit, OnDestroy {
+  private _componentActive: boolean;
 
-  public filteredAuthors: IAuthor[];
-  public sortColumn: string = AuthorSortColumns.FullName;
+  public sortCriteria$: Observable<ISortCriteria<AuthorSortColumns>>;
+  public authorsSearchFilter$: Observable<IAuthorSearchFilter>;
+  public filteredAuthors$: Observable<IAuthor[]>;
 
-  constructor(private _authorsService: AuthorsService) { }
+  constructor(
+    private _authorsFacade: AuthorsFacade,
+    private _appFacade: AppFacade) { }
 
-  ngOnInit() {
-    this.loadAuthors();
-  }
+  public ngOnInit(): void {
+    this._componentActive = true;
 
-  filterAuthors(authorsSearchFilter: IAuthorSearchFilter) {
-    this._authorsSearchFilter = authorsSearchFilter;
+    this._appFacade.loadAuthors();
 
-    this.filteredAuthors = this._authorsService.filterAuthors(this._authors, this._authorsSearchFilter);
-  }
+    this.authorsSearchFilter$ = this._authorsFacade.getAuthorsSearchFilter();
+    this.sortCriteria$ = this._authorsFacade.getSortCriteria();
+    this.filteredAuthors$ = this._authorsFacade.getFilteredAuthors();
 
-  sortAuthors(column: string) {
-    this._authorsSortDesc = this.sortColumn === column ? !this._authorsSortDesc : false;
-    this.sortColumn = column;
-
-    if (this.filteredAuthors) {
-      this._authorsService.sortAuthors(this.filteredAuthors, this.sortColumn, this._authorsSortDesc);
-    }
-  }
-
-  deleteAuthor(authorID: number): void {
-    if (window.confirm('Are you sure you want to delete this author?')) {
-      this._authorsService.deleteAuthor(authorID)
-      .subscribe(() => {
+    this._authorsFacade.getAuthorDeletedShowInfo().pipe(takeWhile(() => this._componentActive))
+    .subscribe((showInfo: boolean) => {
+      if (showInfo) {
         window.alert('Author has been deleted successfully');
-        this.loadAuthors();
-      });
+        this._authorsFacade.deleteAuthorSuccessShowInfo(false);
+        this._appFacade.loadAuthors();
+      }
+    });
+  }
+
+  public ngOnDestroy(): void {
+    this._componentActive = false;
+  }
+
+  public deleteAuthor(authorID: number): void {
+    if (window.confirm('Are you sure you want to delete this author?')) {
+      this._authorsFacade.deleteAuthor(authorID);
     }
   }
 
-  private loadAuthors() {
-    this._authorsService.getAuthors()
-      .subscribe(authors => {
-        this._authors = authors;
-        this.filteredAuthors = this._authorsService.filterAuthors(this._authors, this._authorsSearchFilter);
-        this.sortAuthors(this.sortColumn);
-      });
+  public filterAuthors(authorsSearchFilter: IAuthorSearchFilter) {
+    this._authorsFacade.filterAuthors(authorsSearchFilter);
   }
 
+  public sortAuthors(column: AuthorSortColumns) {
+    this._authorsFacade.sortAuthors(column);
+  }
 }
