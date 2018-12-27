@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IUser } from '../../user.model';
+import { IUser } from '../../models/user.model';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 

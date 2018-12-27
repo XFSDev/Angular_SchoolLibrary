@@ -1,4 +1,0 @@
-<h1 class="h3 mb-3 font-weight-normal text-center">Loans</h1>
-<loans-search-panel [filter]="loansSearchFilter" (filterLoansList)="filterLoansList($event)"></loans-search-panel>
-<loans-table [loans]="filteredLoans" [sortColumn]="sortCriteria.sortColumn" (sortLoansList)="sortLoans($event)"
-             (lendBook)="lendBook($event)" (returnBook)="returnBook($event)" (setBookStatusToLost)="setBookStatusToLost($event)"></loans-table>

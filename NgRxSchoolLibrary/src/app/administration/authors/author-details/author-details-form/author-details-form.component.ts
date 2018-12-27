@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { IAuthor } from '../../author.model';
+import { IAuthor } from '../../../../shared/models/author.model';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 

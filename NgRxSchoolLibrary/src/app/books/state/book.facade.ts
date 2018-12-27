@@ -1,32 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin, combineLatest } from 'rxjs';
-import { IBook } from '../book.model';
+import { Observable, combineLatest } from 'rxjs';
+import { IBook } from '../models/book.model';
 import { Store, select } from '@ngrx/store';
-import {
-  IBookState,
-  getBooks,
-  getBooksSearchFilter,
-  getBooksSortCriteria,
-  getBookRequestedShowInfo,
-  getBookDeletedShowInfo,
-  getBook,
-  getIsEditMode
-} from './book.reducer';
 import { map } from 'rxjs/operators';
-import { IBookSearchFilter } from '../books-list/books-search-filter.model';
-import { BookSortColumns } from '../books-list/book-sort-columns';
-import { ISortCriteria } from 'src/app/sort-criteria.model';
+import { IBookSearchFilter } from '../models/books-search-filter.model';
+import { BookSortColumns } from '../models/book-sort-columns';
+import { ISortCriteria } from 'src/app/shared/models/sort-criteria.model';
 import * as bookActions from '../state/book.actions';
+import * as bookSelectors from './book.reducer';
 
 @Injectable()
 export class BookFacade {
-  constructor(private _store: Store<IBookState>) {}
+  constructor(private _store: Store<bookSelectors.IBookState>) {}
 
   public getBooks(): Observable<IBook[]> {
     return combineLatest(
-      this._store.pipe(select(getBooks)),
-      this._store.pipe(select(getBooksSearchFilter)),
-      this._store.pipe(select(getBooksSortCriteria))
+      this._store.pipe(select(bookSelectors.getBooks)),
+      this._store.pipe(select(bookSelectors.getBooksSearchFilter)),
+      this._store.pipe(select(bookSelectors.getBooksSortCriteria))
     ).pipe(
         map(([books, searchFilter, sortCriteria]) => {
             const filteredBooks = this.filter(books, searchFilter);
@@ -38,18 +29,19 @@ export class BookFacade {
   }
 
   public getSortCriteria(): Observable<ISortCriteria<BookSortColumns>> {
-      return this._store.pipe(select(getBooksSortCriteria));
+      return this._store.pipe(select(bookSelectors.getBooksSortCriteria));
+  }
+
+  public getBooksSearchFilter(): Observable<IBookSearchFilter> {
+    return this._store.pipe(select(bookSelectors.getBooksSearchFilter));
   }
 
   public filterBooks(booksSearchFilter: IBookSearchFilter): void {
     this._store.dispatch(new bookActions.FilterBooksAction(booksSearchFilter));
   }
 
-  public sortBooks(column: BookSortColumns, sortOrderDesc: boolean): void {
-    this._store.dispatch(new bookActions.SortBooksAction({
-        sortColumn: column,
-        sortOrderDesc: sortOrderDesc
-      }));
+  public sortBooks(column: BookSortColumns): void {
+    this._store.dispatch(new bookActions.SortBooksAction(column));
   }
 
   public requestBook(bookID: number): void {
@@ -61,7 +53,7 @@ export class BookFacade {
   }
 
   public getBookRequestedShowInfo(): Observable<boolean> {
-      return this._store.pipe(select(getBookRequestedShowInfo));
+    return this._store.pipe(select(bookSelectors.getBookRequestedShowInfo));
   }
 
   public loadBooks(): void {
@@ -73,7 +65,7 @@ export class BookFacade {
   }
 
   public getBookDeletedShowInfo(): Observable<boolean> {
-      return this._store.pipe(select(getBookDeletedShowInfo));
+    return this._store.pipe(select(bookSelectors.getBookDeletedShowInfo));
   }
 
   public deleteBookSuccessShowInfo(show: boolean): void {
@@ -85,7 +77,11 @@ export class BookFacade {
   }
 
   public getBook(): Observable<IBook> {
-      return this._store.pipe(select(getBook));
+      return this._store.pipe(select(bookSelectors.getBook));
+  }
+
+  public clearBook(): void {
+    this._store.dispatch(new bookActions.ClearBookAction);
   }
 
   public save(book: IBook): void {
@@ -93,7 +89,7 @@ export class BookFacade {
   }
 
   public getIsEditMode(): Observable<boolean> {
-      return this._store.pipe(select(getIsEditMode));
+      return this._store.pipe(select(bookSelectors.getIsEditMode));
   }
 
   public setIsEditMode(isEditMode: boolean): void {

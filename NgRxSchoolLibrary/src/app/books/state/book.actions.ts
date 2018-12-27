@@ -1,16 +1,18 @@
 import { Action } from '@ngrx/store';
-import { IBook } from '../book.model';
-import { IBookSearchFilter } from '../books-list/books-search-filter.model';
-import { ISortCriteria } from '../../sort-criteria.model';
-import { BookSortColumns } from '../books-list/book-sort-columns';
+import { IBook } from '../models/book.model';
+import { IBookSearchFilter } from '../models/books-search-filter.model';
+import { ISortCriteria } from '../../shared/models/sort-criteria.model';
+import { BookSortColumns } from '../models/book-sort-columns';
 
 export enum ActionTypes {
     LoadBooks = '[Book] Load Books',
     LoadBooksSuccess = '[Book] Load Books Success',
     LoadBook = '[Book] Load Book',
     LoadBookSuccess = '[Book] Load Book Success',
+    ClearBook = '[Book] Clear Book',
     FilterBooks = '[Book] Filter Books',
     SortBooks = '[Book] Sort Books',
+    SortBooksSuccess = '[Book] Sort Books Success',
     RequestBook = '[Book] Request Book',
     RequestBookSuccessShowInfo = '[Book] Request Book Success Show Info',
     DeleteBook = '[Book] Delete Book',
@@ -43,6 +45,12 @@ export class LoadBookSuccessAction implements Action {
     constructor(public payload: IBook) { }
 }
 
+export class ClearBookAction implements Action {
+    public readonly type = ActionTypes.ClearBook;
+
+    constructor() { }
+}
+
 export class FilterBooksAction implements Action {
     public readonly type = ActionTypes.FilterBooks;
 
@@ -51,6 +59,12 @@ export class FilterBooksAction implements Action {
 
 export class SortBooksAction implements Action {
     public readonly type = ActionTypes.SortBooks;
+
+    constructor(public payload: BookSortColumns) { }
+}
+
+export class SortBooksSuccessAction implements Action {
+    public readonly type = ActionTypes.SortBooksSuccess;
 
     constructor(public payload: ISortCriteria<BookSortColumns>) { }
 }
@@ -91,6 +105,6 @@ export class SetEditModeAction implements Action {
     constructor(public payload: boolean) { }
 }
 
-export type Actions = LoadBooksAction | LoadBooksSuccessAction | LoadBookAction | LoadBookSuccessAction
-                    | FilterBooksAction | SortBooksAction | RequestBookAction | RequestBookSuccessShowInfoAction
+export type Actions = LoadBooksAction | LoadBooksSuccessAction | LoadBookAction | LoadBookSuccessAction | ClearBookAction
+                    | FilterBooksAction | SortBooksAction | SortBooksSuccessAction | RequestBookAction | RequestBookSuccessShowInfoAction
                     | DeleteBookAction | DeleteBookSuccessShowInfoAction | SaveBookAction | SetEditModeAction;

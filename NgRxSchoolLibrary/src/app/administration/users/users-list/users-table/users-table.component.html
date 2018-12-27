@@ -5,44 +5,44 @@
     <thead class="thead-light">
         <tr>
             <th scope="col">
-                <button (click)="sortUsersList.emit(userColumns.FULL_NAME)" class="btn btn-link">
-                    <u *ngIf="sortColumn===userColumns.FULL_NAME; else fullNameTemplate"><strong>Full Name</strong></u>
-                    <ng-template #fullNameTemplate>Full Name</ng-template>                   
+                <button (click)="sortUsersList.emit(userColumns.FullName)" class="btn btn-link">
+                    <u *ngIf="sortColumn===userColumns.FullName; else fullNameTemplate"><strong>Full Name</strong></u>
+                    <ng-template #fullNameTemplate>Full Name</ng-template>
                 </button>
             </th>
             <th scope="col">
-                <button (click)="sortUsersList.emit(userColumns.EMAIL)" class="btn btn-link">
-                    <u *ngIf="sortColumn===userColumns.EMAIL; else emailTemplate"><strong>Email</strong></u>
-                    <ng-template #emailTemplate>Email</ng-template>                   
+                <button (click)="sortUsersList.emit(userColumns.Email)" class="btn btn-link">
+                    <u *ngIf="sortColumn===userColumns.Email; else emailTemplate"><strong>Email</strong></u>
+                    <ng-template #emailTemplate>Email</ng-template>
                 </button>
-            </th>            
+            </th>
             <th scope="col">
-                <button (click)="sortUsersList.emit(userColumns.ADDRESS)" class="btn btn-link">
-                    <u *ngIf="sortColumn===userColumns.ADDRESS; else addressTemplate"><strong>Address</strong></u>
-                    <ng-template #addressTemplate>Address</ng-template>                   
+                <button (click)="sortUsersList.emit(userColumns.Address)" class="btn btn-link">
+                    <u *ngIf="sortColumn===userColumns.Address; else addressTemplate"><strong>Address</strong></u>
+                    <ng-template #addressTemplate>Address</ng-template>
                 </button>
-            </th>            
+            </th>
             <th scope="col">
-                <button (click)="sortUsersList.emit(userColumns.ROLE_NAME)" class="btn btn-link">
-                    <u *ngIf="sortColumn===userColumns.ROLE_NAME; else roleTemplate"><strong>Role</strong></u>
-                    <ng-template #roleTemplate>Role</ng-template>                   
+                <button (click)="sortUsersList.emit(userColumns.RoleName)" class="btn btn-link">
+                    <u *ngIf="sortColumn===userColumns.RoleName; else roleTemplate"><strong>Role</strong></u>
+                    <ng-template #roleTemplate>Role</ng-template>
                 </button>
-            </th>           
-            <th scope="col"></th>                
+            </th>
+            <th scope="col"></th>
         </tr>
     </thead>
-    <tbody>        
+    <tbody>
         <tr *ngFor="let user of users">
             <td>
                 <a [routerLink]="['/administration/users', user.userID]" class="nav-link">{{user.fullName}}</a>
             </td>
-            <td>{{user.email}}</td> 
-            <td>{{user.address}}</td> 
-            <td>{{user.roleName}}</td>            
-            <td>                
-              <button class="btn btn-danger" [ngStyle]="{'margin-left': '10px'}" (click)="deleteUser.emit(user.userID)">Delete</button>          
+            <td>{{user.email}}</td>
+            <td>{{user.address}}</td>
+            <td>{{user.roleName}}</td>
+            <td>
+              <button class="btn btn-danger" [ngStyle]="{'margin-left': '10px'}" (click)="deleteUser.emit(user.userID)">Delete</button>
             </td>
-        </tr>        
+        </tr>
     </tbody>
   </table>
 </div>

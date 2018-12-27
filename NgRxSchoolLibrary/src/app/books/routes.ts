@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { BooksListComponent } from './books-list/books-list.component';
-import { BookDetailsComponent } from './book-details/book-details.component';
+import { BooksListComponent } from './books-list/containers/books-list.component';
+import { BookDetailsComponent } from './book-details/containers/book-details.component';
 import { BooksGuard } from './books.guard';
 
 export const booksRoutes: Routes = [

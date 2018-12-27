@@ -4,14 +4,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { LoansListComponent } from './loans-list/loans-list.component';
-import { LoansTableComponent } from './loans-list/loans-table/loans-table.component';
-import { LoansSearchPanelComponent } from './loans-list/loans-search-panel/loans-search-panel.component';
+import { LoansListComponent } from './loans-list/containers/loans-list.component';
+import { LoansTableComponent } from './loans-list/components/loans-table/loans-table.component';
+import { LoansSearchPanelComponent } from './loans-list/components/loans-search-panel/loans-search-panel.component';
 import { LoansGuard } from './loans.guard';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './state/loans.reducer';
 import { LoansEffects } from './state/loans.effects';
 import { EffectsModule } from '@ngrx/effects';
+import { LoansFacade } from './state/loans.facade';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { EffectsModule } from '@ngrx/effects';
     LoansSearchPanelComponent
   ],
   providers: [
-    LoansGuard
+    LoansGuard,
+    LoansFacade
   ]
 })
 export class LoansModule { }

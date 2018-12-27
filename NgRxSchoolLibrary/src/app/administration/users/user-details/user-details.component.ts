@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { IUserRole } from '../user-role.model';
-import { IUser } from '../user.model';
+import { IUserRole } from '../models/user-role.model';
+import { IUser } from '../models/user.model';
 import { UsersService } from '../users.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../../authentication/authentication.service';
-import { IUserUpdateResult } from './user-update-result.model';
+import { IUserUpdateResult } from '../models/user-update-result.model';
 
 @Component({
   selector: 'user-details',
@@ -18,18 +18,18 @@ export class UserDetailsComponent implements OnInit {
   public roles: IUserRole[];
   public userUpdateResult: IUserUpdateResult;
 
-  constructor(    
+  constructor(
     private _route: ActivatedRoute,
-    private _router: Router,    
+    private _router: Router,
     private _userService: UsersService) { }
 
   ngOnInit() {
     this._route.paramMap.subscribe(params => {
       const userID = +params.get('id');
 
-      if (userID === 0) {        
+      if (userID === 0) {
         this.user = <IUser> { userID: 0, role: '' };
-        this.isEditMode = true;        
+        this.isEditMode = true;
       } else {
         this.loadUserData(userID);
       }
@@ -37,8 +37,8 @@ export class UserDetailsComponent implements OnInit {
 
     this._userService.getRoles()
       .subscribe((roles: IUserRole[]) => {
-        this.roles = roles;        
-    });      
+        this.roles = roles;
+    });
   }
 
   public edit() {

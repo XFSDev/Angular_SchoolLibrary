@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from './authentication/authentication.service';
+import { AuthenticationFacade } from './authentication/state/authentication.facade';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +10,9 @@ export class AppComponent implements OnInit {
 
   title = 'app';
 
-  constructor(public authService: AuthenticationService) { }
+  constructor(private _authenticationFacade: AuthenticationFacade) { }
 
-  ngOnInit(): void {
-    this.authService.authorizeFromLocalStorage();
+  public ngOnInit(): void {
+    this._authenticationFacade.authorizeFromLocalStorage();
   }
 }

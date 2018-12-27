@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { AuthorsListComponent } from './authors/authors-list/authors-list.component';
+import { AuthorsListComponent } from './authors/authors-list/containers/authors-list.component';
 import { AuthorDetailsComponent } from './authors/author-details/author-details.component';
-import { PublishersListComponent } from './publishers/publishers-list/publishers-list.component';
-import { PublisherDetailsComponent } from './publishers/publisher-details/publisher-details.component';
+import { PublishersListComponent } from './publishers/publishers-list/containers/publishers-list.component';
+import { PublisherDetailsComponent } from './publishers/publisher-details/containers/publisher-details.component';
 import { UsersListComponent } from './users/users-list/users-list.component';
 import { UserDetailsComponent } from './users/user-details/user-details.component';
 
@@ -13,9 +13,9 @@ import { PublishersGuard } from './publishers/publishers.guard';
 import { UsersGuard } from './users/users.guard';
 import { UserGuard } from './users/user.guard';
 
-export const administrationRoutes: Routes = [   
+export const administrationRoutes: Routes = [
     { path: 'authors', component: AuthorsListComponent, canActivate: [AuthorsGuard] },
-    { path: 'authors/:id', component: AuthorDetailsComponent, canActivate: [AuthorGuard] },   
+    { path: 'authors/:id', component: AuthorDetailsComponent, canActivate: [AuthorGuard] },
     { path: 'publishers', component: PublishersListComponent, canActivate: [PublishersGuard] },
     { path: 'publishers/:id', component: PublisherDetailsComponent, canActivate: [PublisherGuard] },
     { path: 'users', component: UsersListComponent, canActivate: [UsersGuard] },

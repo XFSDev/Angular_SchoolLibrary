@@ -1,18 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../authentication/authentication.service';
 import { Router } from '@angular/router';
+import { AuthenticationFacade } from 'src/app/authentication/state/authentication.facade';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
-export class NavBarComponent implements OnInit {  
+export class NavBarComponent implements OnInit {
+  public canEditLoans$: Observable<boolean>;
+  public canEditAuthors$: Observable<boolean>;
+  public canEditPublishers$: Observable<boolean>;
+  public canEditUsers$: Observable<boolean>;
+  public displayAdministrationLink$: Observable<boolean>;
 
-  constructor(public authService: AuthenticationService, public router: Router) { }
+  constructor(private _authenticationFacade: AuthenticationFacade, public router: Router) { }
 
-  ngOnInit() {
-    
+  public ngOnInit(): void {
+    this.canEditLoans$ = this._authenticationFacade.getCanEditLoans();
+    this.displayAdministrationLink$ = this._authenticationFacade.getDisplayAdministrationLink();
+    this.canEditAuthors$ = this._authenticationFacade.getCanEditAuthors();
+    this.canEditPublishers$ = this._authenticationFacade.getCanEditPublishers();
+    this.canEditUsers$ = this._authenticationFacade.getCanEditUsers();
   }
 
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IUser } from '../users/user.model';
-import { IUserSearchFilter } from './users-list/users-search-filter.model';
+import { IUser } from './models/user.model';
+import { IUserSearchFilter } from './models/users-search-filter.model';
 
-import * as columns from '../users/users-list/user-sort-columns';
-import { IUserRole } from './user-role.model';
-import { IUserUpdateResult } from './user-details/user-update-result.model';
+import { UserSortColumns } from './models/user-sort-columns';
+import { IUserRole } from './models/user-role.model';
+import { IUserUpdateResult } from './models/user-update-result.model';
 
 @Injectable()
 export class UsersService {
@@ -40,16 +40,16 @@ export class UsersService {
       let firstField: any;
       let secondField: any;
 
-      if (column === columns.FULL_NAME) {
+      if (column === UserSortColumns.FullName) {
         firstField = first.fullName.toUpperCase();
         secondField = second.fullName.toUpperCase();
-      } else if (column === columns.EMAIL) {
+      } else if (column === UserSortColumns.Email) {
         firstField = first.email.toUpperCase();
         secondField = second.email.toUpperCase();
-      } else if (column === columns.ADDRESS) {
+      } else if (column === UserSortColumns.Address) {
         firstField = first.address.toUpperCase();
         secondField = second.address.toUpperCase();
-      } else if (column === columns.ROLE_NAME) {
+      } else if (column === UserSortColumns.RoleName) {
         firstField = first.roleName.toUpperCase();
         secondField = second.roleName.toUpperCase();
       } else {

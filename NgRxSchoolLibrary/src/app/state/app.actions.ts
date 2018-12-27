@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
-import { IAuthor } from '../administration/authors/author.model';
-import { IPublisher } from '../administration/publishers/publisher.model';
+import { IAuthor } from '../shared/models/author.model';
+import { IPublisher } from '../shared/models/publisher.model';
 
 export enum ActionTypes {
     LoadAuthors = '[Author] Load Authors',

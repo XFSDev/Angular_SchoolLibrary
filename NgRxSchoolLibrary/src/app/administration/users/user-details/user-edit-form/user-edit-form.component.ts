@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IUser } from '../../user.model';
-import { IUserRole } from '../../user-role.model';
+import { IUser } from '../../models/user.model';
+import { IUserRole } from '../../models/user-role.model';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
-import { IUserUpdateResult } from '../user-update-result.model';
+import { IUserUpdateResult } from '../../models/user-update-result.model';
 
 function passwordCompare(c: AbstractControl): { [key: string]: boolean } | null {
   const passwordControl = c.get('password');
@@ -42,13 +42,13 @@ export class UserEditFormComponent implements OnInit {
   @Output() saveUser = new EventEmitter<IUser>();
   @Output() cancelEdit = new EventEmitter<void>();
 
-  public userEditForm: FormGroup;  
+  public userEditForm: FormGroup;
 
   constructor(private _router: Router, private _fb: FormBuilder) { }
 
   ngOnInit() {
     this.userEditForm = this._fb.group({
-      userID: [this.user.userID],     
+      userID: [this.user.userID],
       userName: [this.user.userName, [Validators.required, Validators.maxLength(50)]],
       passwordGroup: this._fb.group({
         password: ['', [Validators.maxLength(128), requiredPasswordValidator(this.user.userID)]],
@@ -67,7 +67,7 @@ export class UserEditFormComponent implements OnInit {
     this._router.navigate(['/administration/users']);
   }
 
-  public save() {    
+  public save() {
     for (const field in this.userEditForm.controls) {
       const control = this.userEditForm.get(field);
       control.markAsTouched( {onlySelf: true } );
@@ -77,7 +77,7 @@ export class UserEditFormComponent implements OnInit {
     this.userEditForm.get('passwordGroup.passwordConfirm').markAsTouched({ onlySelf: true });
 
     if (this.userEditForm.valid) {
-      const user = <IUser> {        
+      const user = <IUser> {
         password: this.userEditForm.value.passwordGroup.password,
         passwordConfirm: this.userEditForm.value.passwordGroup.passwordConfirm,
         ...this.userEditForm.value

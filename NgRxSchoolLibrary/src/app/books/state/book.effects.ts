@@ -3,12 +3,13 @@ import { BooksService } from '../books.service';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { mergeMap, map, tap, switchMap, withLatestFrom } from 'rxjs/operators';
 import * as bookActions from './book.actions';
-import { IBook } from '../book.model';
+import { IBook } from '../models/book.model';
 import { LoansService } from '../../loans/loans.service';
 import { Router } from '@angular/router';
 import { of, Observable, pipe } from 'rxjs';
 import { getRouterParams } from 'src/app/state/app.reducer';
 import { Action, Store, select } from '@ngrx/store';
+import { getBooksSortCriteria } from './book.reducer';
 
 @Injectable()
 export class BookEffects {
@@ -27,6 +28,21 @@ export class BookEffects {
         .getBooks()
         .pipe(map((books: IBook[]) => new bookActions.LoadBooksSuccessAction(books)))
     )
+  );
+
+  @Effect()
+  sortBooks$ = this._actions$.pipe(
+      ofType(bookActions.ActionTypes.SortBooks),
+      pipe(
+          map((action: bookActions.SortBooksAction) => action.payload),
+          withLatestFrom(this._store.pipe(select(getBooksSortCriteria))),
+          switchMap(([column, oldCriteria]) => {
+              return of(new bookActions.SortBooksSuccessAction({
+                  sortColumn: column,
+                  sortOrderDesc: oldCriteria && column === oldCriteria.sortColumn ? !oldCriteria.sortOrderDesc : false
+                }));
+          })
+      )
   );
 
   @Effect()

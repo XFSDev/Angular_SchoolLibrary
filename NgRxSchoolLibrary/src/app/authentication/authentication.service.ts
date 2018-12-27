@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { ICurrentUser } from '../administration/users/current-user.model';
+import { ICurrentUser } from '../administration/users/models/current-user.model';
 import { ILogin } from '../authentication/login/login.model';
 import * as roles from '../authentication/roles';
 import { Observable } from 'rxjs';
@@ -11,85 +11,77 @@ const AUTHORIZATION_DATA_LOCAL_STORAGE_KEY = 'AUTHORIZATION_DATA';
 
 @Injectable()
 export class AuthenticationService {
-  public currentUser: ICurrentUser;
-
   constructor(private _http: HttpClient) { }
 
-  public authorizeFromLocalStorage() {
+  public authorizeFromLocalStorage(): ICurrentUser {
     const data = localStorage.getItem(AUTHORIZATION_DATA_LOCAL_STORAGE_KEY);
-    if (!!data && data.length > 0) {
-      this.currentUser = <ICurrentUser>JSON.parse(data);
-    }
+
+    return !!data && data.length > 0 && <ICurrentUser>JSON.parse(data);
   }
 
-  public login(loginData: ILogin): Observable<any> {
-    return this._http.post(`http://localhost:4200/api/users/token?userName=${loginData.username}&password=${loginData.password}`, null)
+  public login(loginData: ILogin): Observable<ICurrentUser> {
+    return this._http.post<ICurrentUser>(
+      `http://localhost:4200/api/users/token?userName=${loginData.username}&password=${loginData.password}`, null)
       .pipe(
         tap((response: ICurrentUser) => {
-          if (response) {
-            this.currentUser = response;
-            localStorage.setItem(AUTHORIZATION_DATA_LOCAL_STORAGE_KEY, JSON.stringify(this.currentUser));
-          }
-        }),
-        catchError((error: Response) => Observable.throw(error.status))
+            localStorage.setItem(AUTHORIZATION_DATA_LOCAL_STORAGE_KEY, JSON.stringify(response));
+        })
       );
-
   }
 
   public logOff() {
     localStorage.removeItem(AUTHORIZATION_DATA_LOCAL_STORAGE_KEY);
-    this.currentUser = null;
   }
 
-  public canAddBook(): boolean {
-    return this.currentUser && (this.currentUser.role === roles.LIBRARIAN || this.currentUser.role === roles.ADMINISTRATOR);
+  public canAddBook(currentUser: ICurrentUser): boolean {
+    return currentUser && (currentUser.role === roles.LIBRARIAN || currentUser.role === roles.ADMINISTRATOR);
   }
 
-  public canEditBook(): boolean {
-    return this.currentUser && (this.currentUser.role === roles.LIBRARIAN || this.currentUser.role === roles.ADMINISTRATOR);
+  public canEditBook(currentUser: ICurrentUser): boolean {
+    return currentUser && (currentUser.role === roles.LIBRARIAN || currentUser.role === roles.ADMINISTRATOR);
   }
 
-  public canDeleteBook(): boolean {
-    return this.currentUser && (this.currentUser.role === roles.LIBRARIAN || this.currentUser.role === roles.ADMINISTRATOR);
+  public canDeleteBook(currentUser: ICurrentUser): boolean {
+    return currentUser && (currentUser.role === roles.LIBRARIAN || currentUser.role === roles.ADMINISTRATOR);
   }
 
-  public canRequestBook(): boolean {
-    return !!this.currentUser;
+  public canRequestBook(currentUser: ICurrentUser): boolean {
+    return !!currentUser;
   }
 
-  public canDisplayLoans(): boolean {
-    return this.currentUser && (this.currentUser.role === roles.LIBRARIAN || this.currentUser.role === roles.ADMINISTRATOR);
+  public canDisplayLoans(currentUser: ICurrentUser): boolean {
+    return currentUser && (currentUser.role === roles.LIBRARIAN || currentUser.role === roles.ADMINISTRATOR);
   }
 
-  public canEditLoans(): boolean {
-    return this.currentUser && (this.currentUser.role === roles.LIBRARIAN || this.currentUser.role === roles.ADMINISTRATOR);
+  public canEditLoans(currentUser: ICurrentUser): boolean {
+    return currentUser && (currentUser.role === roles.LIBRARIAN || currentUser.role === roles.ADMINISTRATOR);
   }
 
-  public displayAdministrationLink(): boolean {
-    return this.canEditAuthors() || this.canEditPublishers() || this.canEditUsers();
+  public displayAdministrationLink(currentUser: ICurrentUser): boolean {
+    return this.canEditAuthors(currentUser) || this.canEditPublishers(currentUser) || this.canEditUsers(currentUser);
   }
 
-  public canDisplayAuthors(): boolean {
-    return this.currentUser && (this.currentUser.role === roles.LIBRARIAN || this.currentUser.role === roles.ADMINISTRATOR);
+  public canDisplayAuthors(currentUser: ICurrentUser): boolean {
+    return currentUser && (currentUser.role === roles.LIBRARIAN || currentUser.role === roles.ADMINISTRATOR);
   }
 
-  public canEditAuthors(): boolean {
-    return this.currentUser && (this.currentUser.role === roles.LIBRARIAN || this.currentUser.role === roles.ADMINISTRATOR);
+  public canEditAuthors(currentUser: ICurrentUser): boolean {
+    return currentUser && (currentUser.role === roles.LIBRARIAN || currentUser.role === roles.ADMINISTRATOR);
   }
 
-  public canDisplayPublishers(): boolean {
-    return this.currentUser && (this.currentUser.role === roles.LIBRARIAN || this.currentUser.role === roles.ADMINISTRATOR);
+  public canDisplayPublishers(currentUser: ICurrentUser): boolean {
+    return currentUser && (currentUser.role === roles.LIBRARIAN || currentUser.role === roles.ADMINISTRATOR);
   }
 
-  public canEditPublishers(): boolean {
-    return this.currentUser && (this.currentUser.role === roles.LIBRARIAN || this.currentUser.role === roles.ADMINISTRATOR);
+  public canEditPublishers(currentUser: ICurrentUser): boolean {
+    return currentUser && (currentUser.role === roles.LIBRARIAN || currentUser.role === roles.ADMINISTRATOR);
   }
 
-  public canDisplayUsers(): boolean {
-    return this.currentUser && this.currentUser.role === roles.ADMINISTRATOR;
+  public canDisplayUsers(currentUser: ICurrentUser): boolean {
+    return currentUser && currentUser.role === roles.ADMINISTRATOR;
   }
 
-  public canEditUsers(): boolean {
-    return this.currentUser && this.currentUser.role === roles.ADMINISTRATOR;
+  public canEditUsers(currentUser: ICurrentUser): boolean {
+    return currentUser && currentUser.role === roles.ADMINISTRATOR;
   }
 }

@@ -8,15 +8,15 @@
       <li class="nav-item">
         <a [routerLink]="['/books']" routerLinkActive="active" class="nav-link">Books</a>
       </li>
-      <li *ngIf="authService.canEditLoans()" class="nav-item">
+      <li *ngIf="canEditLoans$ | async" class="nav-item">
         <a [routerLink]="['/loans']" routerLinkActive="active" class="nav-link">Loans</a>
       </li>
-      <li *ngIf="authService.displayAdministrationLink()" class="nav-item dropdown">
+      <li *ngIf="displayAdministrationLink$ | async" class="nav-item dropdown">
         <a [class.active]="router.isActive('/administration')" href="#" role="button" data-toggle="dropdown" routerLinkActive="active" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Administration</a>
         <div class="dropdown-menu">      
-          <a *ngIf="authService.canEditAuthors()" [routerLink]="['/administration/authors']" class="dropdown-item">Authors</a>
-          <a *ngIf="authService.canEditPublishers()" [routerLink]="['/administration/publishers']" class="dropdown-item">Publishers</a>
-          <a *ngIf="authService.canEditUsers()" [routerLink]="['/administration/users']" class="dropdown-item">Users</a>    
+          <a *ngIf="canEditAuthors$ | async" [routerLink]="['/administration/authors']" class="dropdown-item">Authors</a>
+          <a *ngIf="canEditPublishers$ | async" [routerLink]="['/administration/publishers']" class="dropdown-item">Publishers</a>
+          <a *ngIf="canEditUsers$ | async" [routerLink]="['/administration/users']" class="dropdown-item">Users</a>    
         </div>
       </li>
     </ul>

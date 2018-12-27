@@ -1,6 +1,8 @@
-<div *ngIf="!!authService.currentUser">
-    Welcome <strong>{{authService.currentUser.userName}}</strong>, click 
+<div *ngIf="currentUser$ | async as currentUser; else login;">
+    Welcome <strong>{{currentUser.userName}}</strong>, click 
     <a href="#" [ngStyle]="{'cursor': 'pointer'}" (click)="logoff()">here</a> to log off
 </div>
 
-<a *ngIf="!authService.currentUser" [routerLink]="['/login']">Log In</a>
+<ng-template #login>
+<a [routerLink]="['/login']">Log In</a>
+</ng-template>

@@ -1,4 +1,4 @@
-import { ICurrentUser } from 'src/app/administration/users/current-user.model';
+import { ICurrentUser } from 'src/app/administration/users/models/current-user.model';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Actions, ActionTypes } from './authentication.actions';
 
@@ -17,6 +17,7 @@ export interface IAuthenticationState {
     canEditPublishers: boolean;
     canDisplayUsers: boolean;
     canEditUsers: boolean;
+    invalidUsernamePassword: boolean;
 }
 
 const initialState: IAuthenticationState = {
@@ -33,7 +34,8 @@ const initialState: IAuthenticationState = {
     canDisplayPublishers: false,
     canEditPublishers: false,
     canDisplayUsers: false,
-    canEditUsers: false
+    canEditUsers: false,
+    invalidUsernamePassword: false
 };
 
 const getAuthenticationState = createFeatureSelector<IAuthenticationState>('authentication');
@@ -108,10 +110,15 @@ export const getCanEditUsers = createSelector(
     state => state.canEditUsers
 );
 
+export const getInvalidUsernamePassword = createSelector(
+    getAuthenticationState,
+    state => state.invalidUsernamePassword
+);
+
 export function reducer(state: IAuthenticationState = initialState, action: Actions): IAuthenticationState {
     switch (action.type) {
         case ActionTypes.LoginSuccess:
-            return { ...state, currentUser: action.payload };
+            return { ...state, currentUser: action.payload, invalidUsernamePassword: false };
         case ActionTypes.LogOffSuccess:
             return initialState;
         case ActionTypes.SetCanAddBook:
@@ -140,6 +147,8 @@ export function reducer(state: IAuthenticationState = initialState, action: Acti
             return { ...state, canDisplayUsers: action.payload};
         case ActionTypes.SetCanEditUsers:
             return { ...state, canEditUsers: action.payload};
+        case ActionTypes.SetInvalidUsernamePassword:
+            return { ...state, invalidUsernamePassword: action.payload };
         default:
             return state;
     }

@@ -1,13 +1,14 @@
 import { Action } from '@ngrx/store';
-import { ICurrentUser } from 'src/app/administration/users/current-user.model';
+import { ICurrentUser } from 'src/app/administration/users/models/current-user.model';
+import { ILogin } from '../login/login.model';
 
 export enum ActionTypes {
+    AuthorizeFromLocalStorage = '[Authentication] Authorize From Local Storage',
     Login = '[Authentication] Login',
     LoginSuccess = '[Authentication] Login Success',
     LogOff = '[Authentication] Log Off',
     LogOffSuccess = '[Authentication] Log Off Success',
     LoadUserFromLocalStorage = '[Authentication] Load User From Local Storage',
-
     SetCanAddBook = '[Authentication] Set Can Add Book',
     SetCanEditBook = '[Authentication] Set Can Edit Book',
     SetCanDeleteBook = '[Authentication] Set Can Delete Book',
@@ -20,13 +21,19 @@ export enum ActionTypes {
     SetCanDisplayPublishers = '[Authentication] Set Can Display Publishers',
     SetCanEditPublishers = '[Authentication] Set Can Edit Publishers',
     SetCanDisplayUsers = '[Authentication] Set Can Display Users',
-    SetCanEditUsers = '[Authentication] Set Can Edit Users'
+    SetCanEditUsers = '[Authentication] Set Can Edit Users',
+    SetInvalidUsernamePassword = '[Authentication] Set Invalid Username Password'
+}
+
+export class AuthorizeFromLocalStorageAction implements Action {
+    public readonly type  = ActionTypes.AuthorizeFromLocalStorage;
+    constructor() { }
 }
 
 export class LoginAction implements Action {
     public readonly type = ActionTypes.Login;
 
-    constructor() { }
+    constructor(public payload: ILogin) { }
 }
 
 export class LoginSuccessAction implements Action {
@@ -132,7 +139,13 @@ export class SetCanEditUsersAction implements Action {
     constructor(public payload: boolean) { }
 }
 
+export class SetInvalidUsernamePassword implements Action {
+    public readonly type = ActionTypes.SetInvalidUsernamePassword;
+    constructor(public payload: boolean) { }
+}
+
 export type Actions =
+    | AuthorizeFromLocalStorageAction
     | LoginAction
     | LoginSuccessAction
     | LogOffAction
@@ -150,4 +163,5 @@ export type Actions =
     | SetCanDisplayPublishersAction
     | SetCanEditPublishersAction
     | SetCanDisplayUsersAction
-    | SetCanEditUsersAction;
+    | SetCanEditUsersAction
+    | SetInvalidUsernamePassword;

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IBook } from '../books/book.model';
-import { IBookStatus } from '../loans/book-status.model';
+import { IBook } from './models/book.model';
+import { IBookStatus } from '../loans/models/book-status.model';
 
 @Injectable()
 export class BooksService {

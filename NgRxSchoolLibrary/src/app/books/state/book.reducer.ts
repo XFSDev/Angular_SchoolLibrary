@@ -1,10 +1,10 @@
-import { IBookStatus } from '../../loans/book-status.model';
-import { IBookSearchFilter } from '../books-list/books-search-filter.model';
-import { IBook } from '../book.model';
+import { IBookStatus } from '../../loans/models/book-status.model';
+import { IBookSearchFilter } from '../models/books-search-filter.model';
+import { IBook } from '../models/book.model';
 import { Actions, ActionTypes } from './book.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ISortCriteria } from '../../sort-criteria.model';
-import { BookSortColumns } from '../books-list/book-sort-columns';
+import { ISortCriteria } from '../../shared/models/sort-criteria.model';
+import { BookSortColumns } from '../models/book-sort-columns';
 
 export interface IBookState {
     bookStatuses: IBookStatus[];
@@ -87,7 +87,9 @@ export function reducer(state: IBookState = initialState, action: Actions): IBoo
             });
         case ActionTypes.LoadBookSuccess:
             return { ...state, book: action.payload};
-        case ActionTypes.SortBooks:
+        case ActionTypes.ClearBook:
+            return { ...state, book: null };
+        case ActionTypes.SortBooksSuccess:
             return { ...state, sortCriteria: action.payload };
         case ActionTypes.RequestBookSuccessShowInfo:
             return { ...state, bookRequstedShowInfo: action.payload };

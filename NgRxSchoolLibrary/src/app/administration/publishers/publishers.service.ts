@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IPublisher } from '../publishers/publisher.model';
-import { IPublisherSearchFilter } from './publishers-list/publishers-search-filter.model';
+import { IPublisher } from '../../shared/models/publisher.model';
+import { IPublisherSearchFilter } from './models/publishers-search-filter.model';
 
-import * as columns from '../publishers/publishers-list/publisher-sort-columns';
+import { PublisherSortColumns } from './models/publisher-sort-columns';
 
 @Injectable()
 export class PublishersService {
@@ -36,13 +36,13 @@ export class PublishersService {
       let firstField: any;
       let secondField: any;
 
-      if (column === columns.NAME) {
+      if (column === PublisherSortColumns.Name) {
         firstField = first.name.toUpperCase();
         secondField = second.name.toUpperCase();
-      } else if (column === columns.ADDRESS) {
+      } else if (column === PublisherSortColumns.Address) {
         firstField = first.address.toUpperCase();
         secondField = second.address.toUpperCase();
-      } else if (column === columns.ADDITIONAL_INFORMATION) {
+      } else if (column === PublisherSortColumns.AdditionalInformation) {
         firstField = first.additionalInformation.toUpperCase();
         secondField = second.additionalInformation.toUpperCase();
       } else {

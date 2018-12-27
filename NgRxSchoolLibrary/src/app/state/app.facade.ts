@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { IMainState, getPublishers, getAuthors } from './app.reducer';
 import * as appActions from 'src/app/state/app.actions';
-import { IPublisher } from '../administration/publishers/publisher.model';
+import { IPublisher } from '../shared/models/publisher.model';
 import { Observable } from 'rxjs';
-import { IAuthor } from '../administration/authors/author.model';
+import { IAuthor } from '../shared/models/author.model';
 
 @Injectable()
 export class AppFacade {

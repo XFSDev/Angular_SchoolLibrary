@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IAuthor } from '../authors/author.model';
-import { IAuthorSearchFilter } from './authors-list/authors-search-filter.model';
+import { IAuthor } from '../../shared/models/author.model';
+import { IAuthorSearchFilter } from './models/authors-search-filter.model';
 
-import * as columns from '../authors/authors-list/author-sort-columns';
+import { AuthorSortColumns } from './models/author-sort-columns';
 
 @Injectable()
 export class AuthorsService {
@@ -33,10 +33,10 @@ export class AuthorsService {
       let firstField: any;
       let secondField: any;
 
-      if (column === columns.FULL_NAME) {
+      if (column === AuthorSortColumns.FullName) {
         firstField = first.fullName.toUpperCase();
         secondField = second.fullName.toUpperCase();
-      } else if (column === columns.ADDITIONAL_INFORMATION) {
+      } else if (column === AuthorSortColumns.AdditionalInformation) {
         firstField = first.additionalInformation.toUpperCase();
         secondField = second.additionalInformation.toUpperCase();
       } else {

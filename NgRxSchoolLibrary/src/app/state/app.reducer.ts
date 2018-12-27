@@ -1,6 +1,6 @@
-import { IPublisher } from '../administration/publishers/publisher.model';
+import { IPublisher } from '../shared/models/publisher.model';
 
-import { IAuthor } from '../administration/authors/author.model';
+import { IAuthor } from '../shared/models/author.model';
 
 import { createFeatureSelector, createSelector, ActionReducerMap } from '@ngrx/store';
 

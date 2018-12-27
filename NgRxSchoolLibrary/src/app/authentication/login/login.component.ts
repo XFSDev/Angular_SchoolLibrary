@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ILogin } from '../login/login.model';
-import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { AuthenticationService } from '../../authentication/authentication.service';
+import { AuthenticationFacade } from '../state/authentication.facade';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -13,11 +14,11 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
-  public invalidUsernamePassword: boolean;
+  public invalidUsernamePassword$: Observable<boolean>;
 
-  constructor(private _router: Router, private _authService: AuthenticationService) { }
+  constructor(private _authenticationFacade: AuthenticationFacade) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     const username = new FormControl('', Validators.required);
     const password = new FormControl('', Validators.required);
 
@@ -25,9 +26,16 @@ export class LoginComponent implements OnInit {
       username: username,
       password: password
     });
+
+    this.invalidUsernamePassword$ = this._authenticationFacade.getInvalidUsernamePassword()
+      .pipe(tap((result: boolean) => {
+        if (result) {
+          this.loginForm.patchValue( { password: '' } );
+        }
+      }));
   }
 
-  signIn(loginData: ILogin) {
+  public signIn(loginData: ILogin): void {
     // tslint:disable-next-line:forin
     for (const field in this.loginForm.controls) {
       const control = this.loginForm.get(field);
@@ -35,18 +43,7 @@ export class LoginComponent implements OnInit {
     }
 
     if (this.loginForm.valid) {
-      this.invalidUsernamePassword = false;
-
-      this._authService.login(loginData)
-        .subscribe(() => {
-          this._router.navigate(['/home']);
-        },
-        error => {
-          if (error === 400) {
-            this.invalidUsernamePassword = true;
-            this.loginForm.patchValue( { password: '' } );
-          }
-        });
+      this._authenticationFacade.login(loginData);
     }
   }
 }

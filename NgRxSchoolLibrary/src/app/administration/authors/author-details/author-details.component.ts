@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IAuthor } from '../author.model';
+import { IAuthor } from '../../../shared/models/author.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthorsService } from '../authors.service';
 

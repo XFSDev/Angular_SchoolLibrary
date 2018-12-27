@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../../authentication/authentication.service';
+import { AuthenticationFacade } from 'src/app/authentication/state/authentication.facade';
+import { Observable } from 'rxjs';
+import { ICurrentUser } from 'src/app/administration/users/models/current-user.model';
 
 @Component({
   selector: 'login-info',
@@ -8,15 +10,17 @@ import { AuthenticationService } from '../../authentication/authentication.servi
   styleUrls: ['./login-info.component.css']
 })
 export class LoginInfoComponent implements OnInit {
+  public currentUser$: Observable<ICurrentUser>;
 
-  constructor(public authService: AuthenticationService,
+  constructor(private _authenticationFacade: AuthenticationFacade,
     private _router: Router) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
+    this.currentUser$ = this._authenticationFacade.getCurrentUser();
   }
 
-  public logoff() {
-    this.authService.logOff();
+  public logoff(): void {
+    this._authenticationFacade.logOff();
     this._router.navigate(['/home']);
   }
 
