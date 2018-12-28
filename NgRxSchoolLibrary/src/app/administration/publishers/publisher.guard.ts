@@ -3,10 +3,13 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { Observable, of } from 'rxjs';
 import { AuthenticationFacade } from 'src/app/authentication/state/authentication.facade';
 import { first, flatMap } from 'rxjs/operators';
+import { PublishersFacade } from './state/publishers.facade';
 
 @Injectable()
 export class PublisherGuard implements CanActivate {
-  constructor(private _router: Router, private _authenticationFacade: AuthenticationFacade) {}
+  constructor(private _router: Router,
+    private _authenticationFacade: AuthenticationFacade,
+    private _publishersFacade: PublishersFacade) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -25,6 +28,8 @@ export class PublisherGuard implements CanActivate {
               this._router.navigate(['/administration/publishers']);
               return of(false);
             }
+
+            this._publishersFacade.setIsEditMode( +id === 0);
 
           return of(true);
           }));

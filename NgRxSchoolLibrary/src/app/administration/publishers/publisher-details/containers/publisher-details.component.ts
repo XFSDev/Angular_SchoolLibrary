@@ -1,51 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IPublisher } from '../../../../shared/models/publisher.model';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PublishersService } from '../../publishers.service';
+import { Observable } from 'rxjs';
+import { PublishersFacade } from '../../state/publishers.facade';
 
 @Component({
   selector: 'publisher-details',
   templateUrl: './publisher-details.component.html',
   styleUrls: ['./publisher-details.component.css']
 })
-export class PublisherDetailsComponent implements OnInit {
-  public isEditMode = false;
-  public publisher: IPublisher;
+export class PublisherDetailsComponent implements OnInit, OnDestroy {
+  public isEditMode$: Observable<boolean>;
+  public publisher$: Observable<IPublisher>;
 
-  constructor(private _route: ActivatedRoute, private _router: Router, private _publishersService: PublishersService) { }
+  constructor(private _publishersFacade: PublishersFacade) { }
 
-  ngOnInit() {
-    this._route.paramMap.subscribe(params => {
-      const publisherID = +params.get('id');
+  public ngOnInit(): void {
+    this._publishersFacade.loadPublisher();
 
-      if (publisherID === 0) {
-        this.publisher = <IPublisher> { publisherID: 0 };
-        this.isEditMode = true;
-      } else {
-        this.loadPublisherData(publisherID);
-      }
-    });
+    this.publisher$ = this._publishersFacade.getPublisher();
+    this.isEditMode$ = this._publishersFacade.getIsEditMode();
+  }
+
+  public ngOnDestroy(): void {
+    this._publishersFacade.clearPublisher();
   }
 
   public edit() {
-    this.isEditMode = true;
+    this._publishersFacade.setIsEditMode(true);
   }
 
   public cancelEdit() {
-    this.isEditMode = false;
+    this._publishersFacade.setIsEditMode(false);
   }
 
-  public save(publisher: IPublisher) {
-    this._publishersService.updatePublisher(publisher)
-      .subscribe(() => {
-        this._router.navigate(['/administration/publishers']);
-      });
-  }
-
-  private loadPublisherData(publisherID: number) {
-    this._publishersService.getPublisher(publisherID)
-      .subscribe(publisher => {
-        this.publisher = publisher;
-      });
+  public save(Publisher: IPublisher) {
+    this._publishersFacade.save(Publisher);
   }
 }

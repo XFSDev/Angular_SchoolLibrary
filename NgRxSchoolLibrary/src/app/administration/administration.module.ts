@@ -37,6 +37,8 @@ import { AuthorsFacade } from './authors/state/authors.facade';
 import { reducers } from './state/administration.reducer';
 import { AuthorDetailsFormComponent } from './authors/author-details/components/author-details-form/author-details-form.component';
 import { AuthorEditFormComponent } from './authors/author-details/components/author-edit-form/author-edit-form.component';
+import { PublishersEffects } from './publishers/state/publishers.effects';
+import { PublishersFacade } from './publishers/state/publishers.facade';
 
 @NgModule({
   imports: [
@@ -47,7 +49,7 @@ import { AuthorEditFormComponent } from './authors/author-details/components/aut
     HttpClientModule,
 
     StoreModule.forFeature('administration', reducers),
-    EffectsModule.forFeature([AuthorsEffects])
+    EffectsModule.forFeature([AuthorsEffects, PublishersEffects])
   ],
   declarations: [
     AuthorsListComponent,
@@ -73,6 +75,7 @@ import { AuthorEditFormComponent } from './authors/author-details/components/aut
     AuthorsFacade,
     AuthorsGuard,
     AuthorGuard,
+    PublishersFacade,
     PublisherGuard,
     PublishersGuard,
     UsersGuard,

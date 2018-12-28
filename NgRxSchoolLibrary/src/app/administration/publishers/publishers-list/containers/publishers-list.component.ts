@@ -1,61 +1,63 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IPublisherSearchFilter } from '../../models/publishers-search-filter.model';
 import { IPublisher } from '../../../../shared/models/publisher.model';
-import { PublishersService } from '../../publishers.service';
 
 import { PublisherSortColumns } from '../../models/publisher-sort-columns';
+import { Observable } from 'rxjs';
+import { ISortCriteria } from 'src/app/shared/models/sort-criteria.model';
+import { PublishersFacade } from '../../state/publishers.facade';
+import { AppFacade } from 'src/app/state/app.facade';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'publishers-list',
   templateUrl: './publishers-list.component.html',
   styleUrls: ['./publishers-list.component.css']
 })
-export class PublishersListComponent implements OnInit {
-  private _publishers: IPublisher[];
-  private _publishersSearchFilter: IPublisherSearchFilter;
-  private _publishersSortDesc = true;
+export class PublishersListComponent implements OnInit, OnDestroy {
+  private _componentActive: boolean;
 
-  public filteredPublishers: IPublisher[];
-  public sortColumn: string = PublisherSortColumns.Name;
+  public sortCriteria$: Observable<ISortCriteria<PublisherSortColumns>>;
+  public publishersSearchFilter$: Observable<IPublisherSearchFilter>;
+  public filteredPublishers$: Observable<IPublisher[]>;
 
-  constructor(private _publishersService: PublishersService) { }
+  constructor(
+    private _publishersFacade: PublishersFacade,
+    private _appFacade: AppFacade) { }
 
-  ngOnInit() {
-    this.loadPublishers();
-  }
+    public ngOnInit(): void {
+      this._componentActive = true;
+      this._appFacade.loadPublishers();
 
-  filterPublishers(publishersSearchFilter: IPublisherSearchFilter) {
-    this._publishersSearchFilter = publishersSearchFilter;
+      this.publishersSearchFilter$ = this._publishersFacade.getPublishersSearchFilter();
+      this.sortCriteria$ = this._publishersFacade.getSortCriteria();
+      this.filteredPublishers$ = this._publishersFacade.getFilteredPublishers();
 
-    this.filteredPublishers = this._publishersService.filterPublishers(this._publishers, this._publishersSearchFilter);
-  }
-
-  sortPublishers(column: string) {
-    this._publishersSortDesc = this.sortColumn === column ? !this._publishersSortDesc : false;
-    this.sortColumn = column;
-
-    if (this.filteredPublishers) {
-      this._publishersService.sortPublishers(this.filteredPublishers, this.sortColumn, this._publishersSortDesc);
-    }
-  }
-
-  deletePublisher(publisherID: number): void {
-    if (window.confirm('Are you sure you want to delete this publisher?')) {
-      this._publishersService.deletePublisher(publisherID)
-      .subscribe(() => {
-        window.alert('Publisher has been deleted successfully');
-        this.loadPublishers();
+      this._publishersFacade.getPublisherDeletedShowInfo().pipe(takeWhile(() => this._componentActive))
+      .subscribe((showInfo: boolean) => {
+        if (showInfo) {
+          window.alert('Publisher has been deleted successfully');
+          this._publishersFacade.deletePublisherSuccessShowInfo(false);
+          this._appFacade.loadPublishers();
+        }
       });
     }
-  }
 
-  private loadPublishers() {
-    this._publishersService.getPublishers()
-      .subscribe(publishers => {
-        this._publishers = publishers;
-        this.filteredPublishers = this._publishersService.filterPublishers(this._publishers, this._publishersSearchFilter);
-        this.sortPublishers(this.sortColumn);
-      });
-  }
+    public ngOnDestroy(): void {
+      this._componentActive = false;
+    }
 
+    public deletePublisher(PublisherID: number): void {
+      if (window.confirm('Are you sure you want to delete this publisher?')) {
+        this._publishersFacade.deletePublisher(PublisherID);
+      }
+    }
+
+    public filterPublishers(PublishersSearchFilter: IPublisherSearchFilter) {
+      this._publishersFacade.filterPublishers(PublishersSearchFilter);
+    }
+
+    public sortPublishers(column: PublisherSortColumns) {
+      this._publishersFacade.sortPublishers(column);
+    }
 }

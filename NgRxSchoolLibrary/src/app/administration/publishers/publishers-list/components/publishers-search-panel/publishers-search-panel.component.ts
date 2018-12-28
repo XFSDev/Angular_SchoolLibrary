@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IPublisherSearchFilter } from '../../../models/publishers-search-filter.model';
 
@@ -8,20 +8,20 @@ import { IPublisherSearchFilter } from '../../../models/publishers-search-filter
   styleUrls: ['./publishers-search-panel.component.css']
 })
 export class PublishersSearchPanelComponent implements OnInit {
-  public publishersSearchPanelForm: FormGroup;
-
+  @Input() publishersSearchFilter: IPublisherSearchFilter;
   @Output() filterPublishersList = new EventEmitter<IPublisherSearchFilter>();
 
-  constructor(private _fb: FormBuilder) {
+  public publishersSearchPanelForm: FormGroup;
+
+  constructor(private _fb: FormBuilder) { }
+
+  public ngOnInit(): void {
     this.publishersSearchPanelForm = this._fb.group({
-      name: '',
-      address: '',
-      additionalInformation: ''
+      name: this.publishersSearchFilter.name,
+      address: this.publishersSearchFilter.address,
+      additionalInformation: this.publishersSearchFilter.additionalInformation
     });
 
     this.publishersSearchPanelForm.valueChanges.subscribe(value => this.filterPublishersList.emit(<IPublisherSearchFilter> value));
-  }
-
-  ngOnInit() {
   }
 }
