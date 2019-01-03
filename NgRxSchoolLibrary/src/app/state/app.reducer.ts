@@ -1,13 +1,12 @@
 import { IPublisher } from '../shared/models/publisher.model';
-
 import { IAuthor } from '../shared/models/author.model';
-
-import { createFeatureSelector, createSelector, ActionReducerMap } from '@ngrx/store';
-
+import { createFeatureSelector, createSelector, ActionReducerMap, MetaReducer } from '@ngrx/store';
+import { storeFreeze } from 'ngrx-store-freeze';
 import { Actions, ActionTypes } from './app.actions';
 import * as fromRouter from '@ngrx/router-store';
 import { RouterStateUrl } from '../router/custom-serializer';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
+import { environment } from 'src/environments/environment';
 
 export interface IMainState {
     publishers: IPublisher[];
@@ -53,6 +52,8 @@ export const reducers: ActionReducerMap<IState> = {
     main: mainReducer,
     router: routerReducer
 };
+
+export const metaReducers: MetaReducer<IState>[] = !environment.production ? [storeFreeze] : [];
 
 const getRouterState = createFeatureSelector<RouterReducerState<RouterStateUrl>>('router');
 
