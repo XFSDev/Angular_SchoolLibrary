@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IUser } from '../../models/user.model';
+import { IUser } from '../../../models/user.model';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class UserDetailsFormComponent implements OnInit {
 
-  @Input() user: IUser; 
+  @Input() user: IUser;
 
   @Output() edit = new EventEmitter<void>();
 

@@ -1,14 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IUser } from '../../models/user.model';
+import { UserSortColumns } from '../../../models/user-sort-columns';
+import { IUser } from '../../../models/user.model';
 
-import { UserSortColumns } from '../../models/user-sort-columns';
 
 @Component({
   selector: 'users-table',
   templateUrl: './users-table.component.html',
   styleUrls: ['./users-table.component.css']
 })
-export class UsersTableComponent implements OnInit {
+export class UsersTableComponent {
   @Input() users: IUser[];
   @Input() sortColumn: string;
 
@@ -16,10 +16,4 @@ export class UsersTableComponent implements OnInit {
   @Output() deleteUser = new EventEmitter<number>();
 
   public userColumns = UserSortColumns;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

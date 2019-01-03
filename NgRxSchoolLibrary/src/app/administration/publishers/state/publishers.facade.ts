@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import * as PublisherActions from './publishers.actions';
-import * as PublisherSelectors from './publishers.reducer';
+import * as publisherActions from './publishers.actions';
+import * as publisherSelectors from './publishers.reducer';
 import { Store, select } from '@ngrx/store';
 import { IPublisherSearchFilter } from '../models/publishers-search-filter.model';
 import { Observable, combineLatest } from 'rxjs';
@@ -12,33 +12,33 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class PublishersFacade {
-  constructor(private _store: Store<PublisherSelectors.IPublishersState>) {}
+  constructor(private _store: Store<publisherSelectors.IPublishersState>) {}
 
   public loadPublisher(): void {
-    this._store.dispatch(new PublisherActions.LoadPublisherAction());
+    this._store.dispatch(new publisherActions.LoadPublisherAction());
   }
 
   public getPublisher(): Observable<IPublisher> {
-      return this._store.pipe(select(PublisherSelectors.getPublisher));
+      return this._store.pipe(select(publisherSelectors.getPublisher));
   }
 
   public clearPublisher(): void {
-    this._store.dispatch(new PublisherActions.ClearPublisherAction);
+    this._store.dispatch(new publisherActions.ClearPublisherAction);
   }
 
   public getIsEditMode(): Observable<boolean> {
-    return this._store.pipe(select(PublisherSelectors.getIsEditMode));
+    return this._store.pipe(select(publisherSelectors.getIsEditMode));
   }
 
   public setIsEditMode(isEditMode: boolean): void {
-      this._store.dispatch(new PublisherActions.SetEditModeAction(isEditMode));
+      this._store.dispatch(new publisherActions.SetEditModeAction(isEditMode));
   }
 
   public getFilteredPublishers(): Observable<IPublisher[]> {
     return combineLatest(
       this._store.pipe(select(getPublishers)),
-      this._store.pipe(select(PublisherSelectors.getPublishersSearchFilter)),
-      this._store.pipe(select(PublisherSelectors.getPublishersSortCriteria))
+      this._store.pipe(select(publisherSelectors.getPublishersSearchFilter)),
+      this._store.pipe(select(publisherSelectors.getPublishersSortCriteria))
     ).pipe(
         map(([publishers, searchFilter, sortCriteria]) => {
             const filteredPublishers = this.filter(publishers, searchFilter);
@@ -50,38 +50,38 @@ export class PublishersFacade {
   }
 
   public getSortCriteria(): Observable<ISortCriteria<PublisherSortColumns>> {
-      return this._store.pipe(select(PublisherSelectors.getPublishersSortCriteria));
+      return this._store.pipe(select(publisherSelectors.getPublishersSortCriteria));
   }
 
   public getPublishersSearchFilter(): Observable<IPublisherSearchFilter> {
-    return this._store.pipe(select(PublisherSelectors.getPublishersSearchFilter));
+    return this._store.pipe(select(publisherSelectors.getPublishersSearchFilter));
   }
 
   public filterPublishers(PublishersSearchFilter: IPublisherSearchFilter): void {
-    this._store.dispatch(new PublisherActions.FilterPublishersAction(PublishersSearchFilter));
+    this._store.dispatch(new publisherActions.FilterPublishersAction(PublishersSearchFilter));
   }
 
   public sortPublishers(column: PublisherSortColumns): void {
-    this._store.dispatch(new PublisherActions.SortPublishersAction(column));
+    this._store.dispatch(new publisherActions.SortPublishersAction(column));
   }
 
   public deletePublisher(PublisherID: number): void {
-    this._store.dispatch(new PublisherActions.DeletePublisherAction(PublisherID));
+    this._store.dispatch(new publisherActions.DeletePublisherAction(PublisherID));
   }
 
   public getPublisherDeletedShowInfo(): Observable<boolean> {
-    return this._store.pipe(select(PublisherSelectors.getPublisherDeletedShowInfo));
+    return this._store.pipe(select(publisherSelectors.getPublisherDeletedShowInfo));
   }
 
   public deletePublisherSuccessShowInfo(show: boolean): void {
-    this._store.dispatch(new PublisherActions.DeletePublisherSuccessShowInfoAction(show));
+    this._store.dispatch(new publisherActions.DeletePublisherSuccessShowInfoAction(show));
   }
 
   public save(Publisher: IPublisher): void {
-    this._store.dispatch(new PublisherActions.SavePublisherAction(Publisher));
+    this._store.dispatch(new publisherActions.SavePublisherAction(Publisher));
   }
 
-  public filter(publishers: IPublisher[], publishersSearchFilter: IPublisherSearchFilter): IPublisher[] {
+  private filter(publishers: IPublisher[], publishersSearchFilter: IPublisherSearchFilter): IPublisher[] {
     if (!publishers || !publishersSearchFilter) {
       return publishers;
     }
@@ -101,7 +101,7 @@ export class PublishersFacade {
     });
   }
 
-  public sort(publishers: IPublisher[], column: string, publishersSortDesc: boolean) {
+  private sort(publishers: IPublisher[], column: string, publishersSortDesc: boolean) {
     publishers.sort((first, second) => {
       let firstField: any;
       let secondField: any;

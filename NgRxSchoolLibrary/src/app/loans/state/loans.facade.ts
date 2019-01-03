@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
-import { Store, select } from "@ngrx/store";
+import { Injectable } from '@angular/core';
+import { Store, select } from '@ngrx/store';
 import * as loanSelectors from './loans.reducer';
 import * as loanActions from '../state/loans.actions';
-import { Observable, combineLatest } from "rxjs";
-import { ILoanSearchFilter } from "../models/loan-search-filter.model";
-import { LoanSortColumns } from "../models/loan-sort-columns";
-import { ISortCriteria } from "src/app/shared/models/sort-criteria.model";
-import { ILoan } from "../models/loan.model";
-import { map } from "rxjs/operators";
-import { ILoanEvent } from "../models/loan-event.model";
+import { Observable, combineLatest } from 'rxjs';
+import { ILoanSearchFilter } from '../models/loan-search-filter.model';
+import { LoanSortColumns } from '../models/loan-sort-columns';
+import { ISortCriteria } from 'src/app/shared/models/sort-criteria.model';
+import { ILoan } from '../models/loan.model';
+import { map } from 'rxjs/operators';
+import { ILoanEvent } from '../models/loan-event.model';
 
 
 @Injectable()

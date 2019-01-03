@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IUser } from '../../models/user.model';
-import { IUserRole } from '../../models/user-role.model';
+import { IUser } from '../../../models/user.model';
+import { IUserRole } from '../../../models/user-role.model';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
-import { IUserUpdateResult } from '../../models/user-update-result.model';
+import { IUserUpdateResult } from '../../../models/user-update-result.model';
 
 function passwordCompare(c: AbstractControl): { [key: string]: boolean } | null {
   const passwordControl = c.get('password');
@@ -43,6 +43,42 @@ export class UserEditFormComponent implements OnInit {
   @Output() cancelEdit = new EventEmitter<void>();
 
   public userEditForm: FormGroup;
+
+  public get userName(): AbstractControl {
+    return this.userEditForm.get('userName');
+  }
+
+  public get password(): AbstractControl {
+    return this.userEditForm.get('passwordGroup.password');
+  }
+
+  public get passwordConfirm(): AbstractControl {
+    return this.userEditForm.get('passwordGroup.passwordConfirm');
+  }
+
+  public get firstName(): AbstractControl {
+    return this.userEditForm.get('firstName');
+  }
+
+  public get lastName(): AbstractControl {
+    return this.userEditForm.get('lastName');
+  }
+
+  public get email(): AbstractControl {
+    return this.userEditForm.get('email');
+  }
+
+  public get address(): AbstractControl {
+    return this.userEditForm.get('address');
+  }
+
+  public get dateOfBirth(): AbstractControl {
+    return this.userEditForm.get('dateOfBirth');
+  }
+
+  public get role(): AbstractControl {
+    return this.userEditForm.get('role');
+  }
 
   constructor(private _router: Router, private _fb: FormBuilder) { }
 

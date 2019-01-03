@@ -24,12 +24,8 @@ import { PublishersTableComponent } from './publishers/publishers-list/component
 import { PublisherDetailsComponent } from './publishers/publisher-details/containers/publisher-details.component';
 import { PublisherDetailsFormComponent } from './publishers/publisher-details/components/publisher-details-form/publisher-details-form.component';
 import { PublisherEditFormComponent } from './publishers/publisher-details/components/publisher-edit-form/publisher-edit-form.component';
-import { UsersListComponent } from './users/users-list/users-list.component';
-import { UsersSearchPanelComponent } from './users/users-list/users-search-panel/users-search-panel.component';
-import { UsersTableComponent } from './users/users-list/users-table/users-table.component';
-import { UserDetailsComponent } from './users/user-details/user-details.component';
-import { UserDetailsFormComponent } from './users/user-details/user-details-form/user-details-form.component';
-import { UserEditFormComponent } from './users/user-details/user-edit-form/user-edit-form.component';
+import { UsersListComponent } from './users/users-list/containers/users-list.component';
+import { UserDetailsComponent } from './users/user-details/containers/user-details.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthorsEffects } from './authors/state/authors.effects';
@@ -39,6 +35,12 @@ import { AuthorDetailsFormComponent } from './authors/author-details/components/
 import { AuthorEditFormComponent } from './authors/author-details/components/author-edit-form/author-edit-form.component';
 import { PublishersEffects } from './publishers/state/publishers.effects';
 import { PublishersFacade } from './publishers/state/publishers.facade';
+import { UsersSearchPanelComponent } from './users/users-list/components/users-search-panel/users-search-panel.component';
+import { UsersTableComponent } from './users/users-list/components/users-table/users-table.component';
+import { UserDetailsFormComponent } from './users/user-details/components/user-details-form/user-details-form.component';
+import { UserEditFormComponent } from './users/user-details/components/user-edit-form/user-edit-form.component';
+import { UsersEffects } from './users/state/users.effects';
+import { UsersFacade } from './users/state/users.facade';
 
 @NgModule({
   imports: [
@@ -49,7 +51,7 @@ import { PublishersFacade } from './publishers/state/publishers.facade';
     HttpClientModule,
 
     StoreModule.forFeature('administration', reducers),
-    EffectsModule.forFeature([AuthorsEffects, PublishersEffects])
+    EffectsModule.forFeature([AuthorsEffects, PublishersEffects, UsersEffects])
   ],
   declarations: [
     AuthorsListComponent,
@@ -78,6 +80,7 @@ import { PublishersFacade } from './publishers/state/publishers.facade';
     PublishersFacade,
     PublisherGuard,
     PublishersGuard,
+    UsersFacade,
     UsersGuard,
     UserGuard
   ]

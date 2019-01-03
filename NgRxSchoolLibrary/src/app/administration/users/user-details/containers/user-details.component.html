@@ -1,0 +1,12 @@
+<ng-container *ngIf="(user$ | async) as user; else: loading">
+  <ng-container *ngIf="roles$ | async as roles; else: loading">
+    <user-edit-form *ngIf="isEditMode$ | async; else details;" [user]="user" [roles]="roles" [userUpdateResult]="userUpdateResult"
+    (saveUser)="save($event)" (cancelEdit)="cancelEdit($event)"></user-edit-form>
+
+    <ng-template #details>
+        <user-details-form [user]="user" (edit)="edit($event)"></user-details-form>
+    </ng-template>
+  </ng-container>
+</ng-container>
+
+<ng-template #loading> Loading... </ng-template>

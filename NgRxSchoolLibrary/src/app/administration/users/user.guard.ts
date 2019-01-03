@@ -3,10 +3,14 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { Observable, of } from 'rxjs';
 import { AuthenticationFacade } from 'src/app/authentication/state/authentication.facade';
 import { first, flatMap } from 'rxjs/operators';
+import { UsersFacade } from './state/users.facade';
 
 @Injectable()
 export class UserGuard implements CanActivate {
-  constructor(private _router: Router, private _authenticationFacade: AuthenticationFacade) {}
+  constructor(
+    private _router: Router,
+    private _authenticationFacade: AuthenticationFacade,
+    private _usersFacade: UsersFacade) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     return this._authenticationFacade.getCanDisplayUsers()
@@ -19,10 +23,13 @@ export class UserGuard implements CanActivate {
         }
 
         const id = next.paramMap.get('id');
-          if (isNaN(parseInt(id, 10))) {
-            this._router.navigate(['/administration/users']);
-            return of(false);
-          }
+
+        if (isNaN(parseInt(id, 10))) {
+          this._router.navigate(['/administration/users']);
+          return of(false);
+        }
+
+        this._usersFacade.setIsEditMode( +id === 0);
 
         return of(true);
       }));

@@ -3,8 +3,8 @@ import { AuthorsListComponent } from './authors/authors-list/containers/authors-
 import { AuthorDetailsComponent } from './authors/author-details/containers/author-details.component';
 import { PublishersListComponent } from './publishers/publishers-list/containers/publishers-list.component';
 import { PublisherDetailsComponent } from './publishers/publisher-details/containers/publisher-details.component';
-import { UsersListComponent } from './users/users-list/users-list.component';
-import { UserDetailsComponent } from './users/user-details/user-details.component';
+import { UsersListComponent } from './users/users-list/containers/users-list.component';
+import { UserDetailsComponent } from './users/user-details/containers/user-details.component';
 
 import { AuthorsGuard } from './authors/authors.guard';
 import { AuthorGuard } from './authors/author.guard';

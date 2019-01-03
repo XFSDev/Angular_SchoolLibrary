@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IPublisher } from '../../../../../shared/models/publisher.model';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,6 +14,18 @@ export class PublisherEditFormComponent implements OnInit {
   @Output() cancelEdit = new EventEmitter<void>();
 
   public publisherEditForm: FormGroup;
+
+  public get name(): AbstractControl {
+    return this.publisherEditForm.get('name');
+  }
+
+  public get address(): AbstractControl {
+    return this.publisherEditForm.get('address');
+  }
+
+  public get additionalInformation(): AbstractControl {
+    return this.publisherEditForm.get('additionalInformation');
+  }
 
   constructor(private _router: Router, private _fb: FormBuilder) { }
 

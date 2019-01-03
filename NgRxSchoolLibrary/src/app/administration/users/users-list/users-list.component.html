@@ -1,5 +1,0 @@
-<div>
-    <h1 class="h3 mb-3 font-weight-normal text-center">Users</h1>
-    <users-search-panel (filterUsersList)="filterUsers($event)" [filter]="defaultFilter"></users-search-panel>
-    <users-table [users]="filteredUsers" [sortColumn]="sortColumn" (deleteUser)="deleteUser($event)" (sortUsersList)="sortUsers($event)"></users-table>
-  </div>
