@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { ICurrentUser } from '../administration/users/models/current-user.model';
 import { ILogin } from '../authentication/login/login.model';
 import * as roles from '../authentication/roles';
 import { Observable } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 const AUTHORIZATION_DATA_LOCAL_STORAGE_KEY = 'AUTHORIZATION_DATA';
 
 @Injectable()
 export class AuthenticationService {
-  constructor(private _http: HttpClient) { }
+  private _baseUrl: string;
+
+  constructor(private _http: HttpClient) {
+    this._baseUrl = environment.baseUrl;
+  }
 
   public authorizeFromLocalStorage(): ICurrentUser {
     const data = localStorage.getItem(AUTHORIZATION_DATA_LOCAL_STORAGE_KEY);
@@ -21,7 +26,7 @@ export class AuthenticationService {
 
   public login(loginData: ILogin): Observable<ICurrentUser> {
     return this._http.post<ICurrentUser>(
-      `http://localhost:4200/api/users/token?userName=${loginData.username}&password=${loginData.password}`, null)
+      `${this._baseUrl}/users/token?userName=${loginData.username}&password=${loginData.password}`, null)
       .pipe(
         tap((response: ICurrentUser) => {
             localStorage.setItem(AUTHORIZATION_DATA_LOCAL_STORAGE_KEY, JSON.stringify(response));
