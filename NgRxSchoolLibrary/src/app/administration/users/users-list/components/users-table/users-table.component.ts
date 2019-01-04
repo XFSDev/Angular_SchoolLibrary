@@ -4,7 +4,7 @@ import { IUser } from '../../../models/user.model';
 
 
 @Component({
-  selector: 'users-table',
+  selector: 'app-users-table',
   templateUrl: './users-table.component.html',
   styleUrls: ['./users-table.component.css']
 })

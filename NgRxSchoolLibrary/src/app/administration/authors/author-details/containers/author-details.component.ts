@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthorsFacade } from '../../state/authors.facade';
 
 @Component({
-  selector: 'author-details',
+  selector: 'app-author-details',
   templateUrl: './author-details.component.html',
   styleUrls: ['./author-details.component.css']
 })

@@ -10,7 +10,7 @@ import { ISortCriteria } from 'src/app/shared/models/sort-criteria.model';
 import { takeWhile } from 'rxjs/operators';
 
 @Component({
-  selector: 'authors-list',
+  selector: 'app-authors-list',
   templateUrl: './authors-list.component.html',
   styleUrls: ['./authors-list.component.css']
 })

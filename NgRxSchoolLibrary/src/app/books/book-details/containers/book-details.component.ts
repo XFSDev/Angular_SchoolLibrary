@@ -9,7 +9,7 @@ import { AppFacade } from 'src/app/state/app.facade';
 import { AuthenticationFacade } from 'src/app/authentication/state/authentication.facade';
 
 @Component({
-  selector: 'book-details',
+  selector: 'app-book-details',
   templateUrl: './book-details.component.html',
   styleUrls: ['./book-details.component.css']
 })

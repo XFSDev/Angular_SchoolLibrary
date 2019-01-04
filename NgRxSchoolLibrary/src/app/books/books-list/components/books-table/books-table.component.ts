@@ -5,7 +5,7 @@ import * as statuses from '../../../../shared/models/book-statuses';
 import { BookSortColumns } from '../../../models/book-sort-columns';
 
 @Component({
-  selector: 'books-table',
+  selector: 'app-books-table',
   templateUrl: './books-table.component.html',
   styleUrls: ['./books-table.component.css']
 })

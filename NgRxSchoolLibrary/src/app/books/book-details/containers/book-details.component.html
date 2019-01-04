@@ -1,18 +1,18 @@
 <div *ngIf="(book$ | async) as book; else: loading">
-  <book-edit-form *ngIf="isEditMode$ | async; else details;"
+  <app-book-edit-form *ngIf="isEditMode$ | async; else details;"
       [book]="book"
       [authors]="authors$ | async"
       [publishers]="publishers$ | async"
       (saveBook)="save($event)"
       (cancelEdit)="cancelEdit($event)">
-  </book-edit-form>
+  </app-book-edit-form>
 
   <ng-template #details>
-    <book-details-form
+    <app-book-details-form
         [book]="book"
         [showEditButton]="canEditBook$ | async"
         (edit)="edit($event)">
-      </book-details-form>
+      </app-book-details-form>
   </ng-template>
 </div>
 

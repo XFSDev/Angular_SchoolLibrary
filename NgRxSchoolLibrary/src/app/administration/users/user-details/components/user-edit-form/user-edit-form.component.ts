@@ -30,7 +30,7 @@ function requiredPasswordValidator(userID: number): ValidatorFn {
 }
 
 @Component({
-  selector: 'user-edit-form',
+  selector: 'app-user-edit-form',
   templateUrl: './user-edit-form.component.html',
   styleUrls: ['./user-edit-form.component.css']
 })

@@ -6,7 +6,7 @@ import { ILoanEvent } from '../../../models/loan-event.model';
 import { LoanSortColumns } from '../../../models/loan-sort-columns';
 
 @Component({
-  selector: 'loans-table',
+  selector: 'app-loans-table',
   templateUrl: './loans-table.component.html',
   styleUrls: ['./loans-table.component.css']
 })

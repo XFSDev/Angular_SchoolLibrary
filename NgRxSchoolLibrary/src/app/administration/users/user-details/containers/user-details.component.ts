@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { UsersFacade } from '../../state/users.facade';
 
 @Component({
-  selector: 'user-details',
+  selector: 'app-user-details',
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.css']
 })

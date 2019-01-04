@@ -3,7 +3,7 @@ import { IAuthor } from 'src/app/shared/models/author.model';
 import { AuthorSortColumns } from '../../../models/author-sort-columns';
 
 @Component({
-  selector: 'authors-table',
+  selector: 'app-authors-table',
   templateUrl: './authors-table.component.html',
   styleUrls: ['./authors-table.component.css']
 })

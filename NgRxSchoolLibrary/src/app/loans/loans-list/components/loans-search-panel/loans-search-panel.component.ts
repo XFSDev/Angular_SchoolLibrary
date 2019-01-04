@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { ILoanSearchFilter } from '../../../models/loan-search-filter.model';
 
 @Component({
-  selector: 'loans-search-panel',
+  selector: 'app-loans-search-panel',
   templateUrl: './loans-search-panel.component.html',
   styleUrls: ['./loans-search-panel.component.css']
 })

@@ -10,7 +10,7 @@ import { AppFacade } from 'src/app/state/app.facade';
 import { takeWhile } from 'rxjs/operators';
 
 @Component({
-  selector: 'publishers-list',
+  selector: 'app-publishers-list',
   templateUrl: './publishers-list.component.html',
   styleUrls: ['./publishers-list.component.css']
 })

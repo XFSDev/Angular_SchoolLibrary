@@ -1,10 +1,10 @@
 <div *ngIf="(publisher$ | async) as publisher; else: loading">
-  <publisher-edit-form *ngIf="isEditMode$ | async; else details;"
+  <app-publisher-edit-form *ngIf="isEditMode$ | async; else details;"
     [publisher]="publisher" (savePublisher)="save($event)" (cancelEdit)="cancelEdit($event)">
-  </publisher-edit-form>
+  </app-publisher-edit-form>
 
   <ng-template #details>
-    <publisher-details-form [publisher]="publisher" (edit)="edit($event)"></publisher-details-form>
+    <app-publisher-details-form [publisher]="publisher" (edit)="edit($event)"></app-publisher-details-form>
   </ng-template>
 </div>
 

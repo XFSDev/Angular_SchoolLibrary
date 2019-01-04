@@ -6,7 +6,7 @@ import { IPublisher } from '../../../../shared/models/publisher.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'book-edit-form',
+  selector: 'app-book-edit-form',
   templateUrl: './book-edit-form.component.html',
   styleUrls: ['./book-edit-form.component.css']
 })

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { IAuthor } from 'src/app/shared/models/author.model';
 
 @Component({
-  selector: 'author-edit-form',
+  selector: 'app-author-edit-form',
   templateUrl: './author-edit-form.component.html',
   styleUrls: ['./author-edit-form.component.css']
 })

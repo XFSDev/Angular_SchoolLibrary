@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { IAuthorSearchFilter } from '../../../models/authors-search-filter.model';
 
 @Component({
-  selector: 'authors-search-panel',
+  selector: 'app-authors-search-panel',
   templateUrl: './authors-search-panel.component.html',
   styleUrls: ['./authors-search-panel.component.css']
 })

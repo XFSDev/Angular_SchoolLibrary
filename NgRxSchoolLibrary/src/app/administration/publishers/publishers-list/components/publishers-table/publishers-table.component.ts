@@ -4,7 +4,7 @@ import { IPublisher } from '../../../../../shared/models/publisher.model';
 import { PublisherSortColumns } from '../../../models/publisher-sort-columns';
 
 @Component({
-  selector: 'publishers-table',
+  selector: 'app-publishers-table',
   templateUrl: './publishers-table.component.html',
   styleUrls: ['./publishers-table.component.css']
 })

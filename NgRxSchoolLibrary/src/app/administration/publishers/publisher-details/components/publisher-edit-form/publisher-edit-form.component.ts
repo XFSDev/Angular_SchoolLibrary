@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'publisher-edit-form',
+  selector: 'app-publisher-edit-form',
   templateUrl: './publisher-edit-form.component.html',
   styleUrls: ['./publisher-edit-form.component.css']
 })

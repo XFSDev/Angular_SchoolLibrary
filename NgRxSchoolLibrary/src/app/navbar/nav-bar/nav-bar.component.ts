@@ -4,7 +4,7 @@ import { AuthenticationFacade } from 'src/app/authentication/state/authenticatio
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'nav-bar',
+  selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })

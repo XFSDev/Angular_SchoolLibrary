@@ -12,7 +12,7 @@ import { takeWhile } from 'rxjs/operators';
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'loans-list',
+  selector: 'app-loans-list',
   templateUrl: './loans-list.component.html',
   styleUrls: ['./loans-list.component.css']
 })

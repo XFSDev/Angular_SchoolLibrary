@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { PublishersFacade } from '../../state/publishers.facade';
 
 @Component({
-  selector: 'publisher-details',
+  selector: 'app-publisher-details',
   templateUrl: './publisher-details.component.html',
   styleUrls: ['./publisher-details.component.css']
 })

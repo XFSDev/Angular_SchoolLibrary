@@ -6,7 +6,7 @@ import { IBookSearchFilter } from '../../../models/books-search-filter.model';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'books-search-panel',
+  selector: 'app-books-search-panel',
   templateUrl: './books-search-panel.component.html',
   styleUrls: ['./books-search-panel.component.css']
 })

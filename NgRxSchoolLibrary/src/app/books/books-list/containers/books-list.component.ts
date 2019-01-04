@@ -16,7 +16,7 @@ import { AuthenticationFacade } from 'src/app/authentication/state/authenticatio
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'books-list',
+  selector: 'app-books-list',
   templateUrl: './books-list.component.html',
   styleUrls: ['./books-list.component.css']
 })

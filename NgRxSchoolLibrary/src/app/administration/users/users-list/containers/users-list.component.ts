@@ -8,7 +8,7 @@ import { ISortCriteria } from 'src/app/shared/models/sort-criteria.model';
 import { takeWhile } from 'rxjs/operators';
 
 @Component({
-  selector: 'users-list',
+  selector: 'app-users-list',
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.css']
 })

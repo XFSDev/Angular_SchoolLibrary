@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { ICurrentUser } from 'src/app/administration/users/models/current-user.model';
 
 @Component({
-  selector: 'login-info',
+  selector: 'app-login-info',
   templateUrl: './login-info.component.html',
   styleUrls: ['./login-info.component.css']
 })

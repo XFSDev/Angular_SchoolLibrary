@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { IUserSearchFilter } from '../../../models/users-search-filter.model';
 
 @Component({
-  selector: 'users-search-panel',
+  selector: 'app-users-search-panel',
   templateUrl: './users-search-panel.component.html',
   styleUrls: ['./users-search-panel.component.css']
 })

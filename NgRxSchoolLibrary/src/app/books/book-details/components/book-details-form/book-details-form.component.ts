@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'book-details-form',
+  selector: 'app-book-details-form',
   templateUrl: './book-details-form.component.html',
   styleUrls: ['./book-details-form.component.css']
 })
