@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IBook } from '../../../models/book.model';
-import { Router } from '@angular/router';
 import { IAuthor } from '../../../../shared/models/author.model';
 import { IPublisher } from '../../../../shared/models/publisher.model';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-book-edit-form',
@@ -17,16 +16,37 @@ export class BookEditFormComponent implements OnInit {
 
   @Output() saveBook = new EventEmitter<IBook>();
   @Output() cancelEdit = new EventEmitter<void>();
+  @Output() redirectToBooksList = new EventEmitter<void>();
+
+  public get title(): AbstractControl {
+    return this.bookEditForm.get('title');
+  }
+
+  public get releaseDate(): AbstractControl {
+    return this.bookEditForm.get('releaseDate');
+  }
+
+  public get authorIds(): AbstractControl {
+    return this.bookEditForm.get('authorIds');
+  }
+
+  public get publisherID(): AbstractControl {
+    return this.bookEditForm.get('publisherID');
+  }
+
+  public get additionalInformation(): AbstractControl {
+    return this.bookEditForm.get('additionalInformation');
+  }
 
   public maxDate: Date;
 
   public bookEditForm: FormGroup;
 
-  constructor(private _router: Router, private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder) {
     this.maxDate = new Date();
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.bookEditForm = this._fb.group({
       bookID: [this.book.bookID],
       title: [this.book.title, [Validators.required, Validators.maxLength(100)]],
@@ -35,10 +55,6 @@ export class BookEditFormComponent implements OnInit {
       publisherID: [this.book.publisherID, Validators.min(1)],
       additionalInformation: [this.book.additionalInformation, Validators.maxLength(1000)]
     });
-  }
-
-  public redirectToBooksList() {
-    this._router.navigate(['/books']);
   }
 
   public save() {

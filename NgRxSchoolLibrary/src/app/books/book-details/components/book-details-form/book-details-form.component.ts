@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IBook } from '../../../models/book.model';
-import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -13,16 +12,13 @@ export class BookDetailsFormComponent implements OnInit {
   @Input() showEditButton: boolean;
 
   @Output() edit = new EventEmitter<void>();
+  @Output() redirectToBooksList = new EventEmitter<void>();
 
   public bookDetailsForm: FormGroup;
 
-  constructor(private _router: Router) { }
+  constructor() { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.bookDetailsForm = new FormGroup({});
-  }
-
-  public redirectToBooksList() {
-    this._router.navigate(['/books']);
   }
 }

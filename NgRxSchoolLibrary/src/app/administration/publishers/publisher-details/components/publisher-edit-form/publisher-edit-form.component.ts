@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IPublisher } from '../../../../../shared/models/publisher.model';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-publisher-edit-form',
@@ -10,8 +9,10 @@ import { Router } from '@angular/router';
 })
 export class PublisherEditFormComponent implements OnInit {
   @Input() publisher: IPublisher;
+
   @Output() savePublisher = new EventEmitter<IPublisher>();
   @Output() cancelEdit = new EventEmitter<void>();
+  @Output() redirectToPublishersList = new EventEmitter<void>();
 
   public publisherEditForm: FormGroup;
 
@@ -27,19 +28,15 @@ export class PublisherEditFormComponent implements OnInit {
     return this.publisherEditForm.get('additionalInformation');
   }
 
-  constructor(private _router: Router, private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.publisherEditForm = this._fb.group({
       publisherID: [this.publisher.publisherID],
       name: [this.publisher.name, [Validators.required, Validators.maxLength(50)]],
       address: [this.publisher.address, [Validators.required, Validators.maxLength(200)]],
       additionalInformation: [this.publisher.additionalInformation, Validators.maxLength(1000)]
     });
-  }
-
-  public redirectToPublishersList() {
-    this._router.navigate(['/administration/publishers']);
   }
 
   public save() {

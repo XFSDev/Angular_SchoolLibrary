@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IPublisher } from '../../../../shared/models/publisher.model';
 import { Observable } from 'rxjs';
 import { PublishersFacade } from '../../state/publishers.facade';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-publisher-details',
@@ -12,7 +13,7 @@ export class PublisherDetailsComponent implements OnInit, OnDestroy {
   public isEditMode$: Observable<boolean>;
   public publisher$: Observable<IPublisher>;
 
-  constructor(private _publishersFacade: PublishersFacade) { }
+  constructor(private _publishersFacade: PublishersFacade, private _router: Router) { }
 
   public ngOnInit(): void {
     this._publishersFacade.loadPublisher();
@@ -35,5 +36,9 @@ export class PublisherDetailsComponent implements OnInit, OnDestroy {
 
   public save(Publisher: IPublisher) {
     this._publishersFacade.save(Publisher);
+  }
+
+  public redirectToPublishersList() {
+    this._router.navigate(['/administration/publishers']);
   }
 }

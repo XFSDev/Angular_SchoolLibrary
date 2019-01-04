@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { Router } from '@angular/router';
 import { IAuthor } from 'src/app/shared/models/author.model';
 
 @Component({
@@ -10,8 +9,10 @@ import { IAuthor } from 'src/app/shared/models/author.model';
 })
 export class AuthorEditFormComponent implements OnInit {
   @Input() author: IAuthor;
+
   @Output() saveAuthor = new EventEmitter<IAuthor>();
   @Output() cancelEdit = new EventEmitter<void>();
+  @Output() redirectToAuthorsList = new EventEmitter<void>();
 
   public get firstName(): AbstractControl {
     return this.authorEditForm.get('firstName');
@@ -27,19 +28,15 @@ export class AuthorEditFormComponent implements OnInit {
 
   public authorEditForm: FormGroup;
 
-  constructor(private _router: Router, private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.authorEditForm = this._fb.group({
       authorID: [this.author.authorID],
       firstName: [this.author.firstName, [Validators.required, Validators.maxLength(50)]],
       lastName: [this.author.lastName, [Validators.required, Validators.maxLength(50)]],
       additionalInformation: [this.author.additionalInformation, Validators.maxLength(1000)]
     });
-  }
-
-  public redirectToAuthorsList() {
-    this._router.navigate(['/administration/authors']);
   }
 
   public save() {

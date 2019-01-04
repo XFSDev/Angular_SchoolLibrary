@@ -120,7 +120,8 @@
                               <ng-container *ngIf="!user.userID || user.userID === 0">Add</ng-container>
                             </button>
                         </span>
-                        <button *ngIf="!user.userID || user.userID === 0" class="btn btn-secondary" (click)="redirectToUsersList()">Return</button>
+                        <button *ngIf="!user.userID || user.userID === 0" class="btn btn-secondary"
+                          (click)="redirectToUsersList.emit()">Return</button>
                         <button *ngIf="user.userID && user.userID > 0" class="btn btn-secondary" (click)="cancelEdit.emit()">Cancel</button>
               </div>
           </div>

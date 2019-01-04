@@ -4,6 +4,7 @@ import { IUser } from '../../models/user.model';
 import { IUserUpdateResult } from '../../models/user-update-result.model';
 import { Observable } from 'rxjs';
 import { UsersFacade } from '../../state/users.facade';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-details',
@@ -16,7 +17,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   public roles$: Observable<IUserRole[]>;
   public userUpdateResult: IUserUpdateResult;
 
-  constructor(private _usersFacade: UsersFacade) { }
+  constructor(private _usersFacade: UsersFacade, private _router: Router) { }
 
   public ngOnInit(): void {
     this._usersFacade.loadRoles();
@@ -41,5 +42,9 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
 
   public save(user: IUser): void {
     this._usersFacade.save(user);
+  }
+
+  public redirectToUsersList() {
+    this._router.navigate(['/administration/users']);
   }
 }

@@ -4,14 +4,16 @@
       [authors]="authors$ | async"
       [publishers]="publishers$ | async"
       (saveBook)="save($event)"
-      (cancelEdit)="cancelEdit($event)">
+      (cancelEdit)="cancelEdit($event)"
+      (redirectToBooksList)="redirectToBooksList($event)">
   </app-book-edit-form>
 
   <ng-template #details>
     <app-book-details-form
         [book]="book"
         [showEditButton]="canEditBook$ | async"
-        (edit)="edit($event)">
+        (edit)="edit($event)"
+        (redirectToBooksList)="redirectToBooksList($event)">
       </app-book-details-form>
   </ng-template>
 </div>

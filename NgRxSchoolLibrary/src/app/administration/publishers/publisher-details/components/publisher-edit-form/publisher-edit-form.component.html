@@ -45,7 +45,8 @@
                     <ng-container *ngIf="!publisher.publisherID || publisher.publisherID === 0">Add</ng-container>
                   </button>
               </span>
-              <button *ngIf="!publisher.publisherID || publisher.publisherID === 0" class="btn btn-secondary" (click)="redirectToPublishersList()">Return</button>
+              <button *ngIf="!publisher.publisherID || publisher.publisherID === 0" class="btn btn-secondary"
+                (click)="redirectToPublishersList.emit()">Return</button>
               <button *ngIf="publisher.publisherID && publisher.publisherID > 0" class="btn btn-secondary" (click)="cancelEdit.emit()">Cancel</button>
           </div>
         </div>

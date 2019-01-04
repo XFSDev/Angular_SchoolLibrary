@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IAuthor } from '../../../../shared/models/author.model';
 import { Observable } from 'rxjs';
 import { AuthorsFacade } from '../../state/authors.facade';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-author-details',
@@ -12,7 +13,7 @@ export class AuthorDetailsComponent implements OnInit, OnDestroy {
   public isEditMode$: Observable<boolean>;
   public author$: Observable<IAuthor>;
 
-  constructor(private _authorsFacade: AuthorsFacade) { }
+  constructor(private _authorsFacade: AuthorsFacade, private _router: Router) { }
 
   public ngOnInit(): void {
     this._authorsFacade.loadAuthor();
@@ -35,5 +36,9 @@ export class AuthorDetailsComponent implements OnInit, OnDestroy {
 
   public save(author: IAuthor) {
     this._authorsFacade.save(author);
+  }
+
+  public redirectToAuthorsList() {
+    this._router.navigate(['/administration/authors']);
   }
 }

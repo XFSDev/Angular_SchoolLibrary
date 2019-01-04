@@ -1,4 +1,4 @@
-<div>          
+<div>
     <h1 class="h3 mb-3 font-weight-normal text-center">
       Publisher Details
     </h1>
@@ -6,33 +6,33 @@
       <form [formGroup]="publisherDetailsForm">
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Name:</label>
-          <div class="col-sm-9">                                   
+          <div class="col-sm-9">
             <label class="col-form-label">{{publisher.name}}</label>
           </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-3 col-form-label">Address:</label>
-            <div class="col-sm-9">                                   
+            <div class="col-sm-9">
               <label class="col-form-label">{{publisher.address}}</label>
             </div>
-        </div>          
-  
+        </div>
+
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Additional Information:</label>
           <div class="col-sm-9">
           <label class="col-form-label">{{publisher.additionalInformation}}</label>
           </div>
-        </div>             
-  
+        </div>
+
         <div class="form-group row">
-          <div class="col-sm-offset-3 col-sm-9">                
+          <div class="col-sm-offset-3 col-sm-9">
             <span [ngStyle]="{ 'marginRight': '20px' }">
               <button class="btn btn-primary" (click)="edit.emit()">Edit</button>
-            </span>                
-            <button class="btn btn-secondary" (click)="redirectToPublishersList()">Return</button>
+            </span>
+            <button class="btn btn-secondary" (click)="redirectToPublishersList.emit()">Return</button>
           </div>
         </div>
       </form>
-    </div>          
+    </div>
   </div>

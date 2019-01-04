@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { BookFacade } from '../../state/book.facade';
 import { AppFacade } from 'src/app/state/app.facade';
 import { AuthenticationFacade } from 'src/app/authentication/state/authentication.facade';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-details',
@@ -23,7 +24,8 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private _bookFacade: BookFacade,
     private _appFacade: AppFacade,
-    private _authenticationFacade: AuthenticationFacade
+    private _authenticationFacade: AuthenticationFacade,
+    private _router: Router
   ) {}
 
   public ngOnInit(): void {
@@ -53,5 +55,9 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
   public save(book: IBook) {
     this._bookFacade.save(book);
+  }
+
+  public redirectToBooksList() {
+    this._router.navigate(['/books']);
   }
 }

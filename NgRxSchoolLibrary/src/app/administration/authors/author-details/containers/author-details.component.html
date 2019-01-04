@@ -1,10 +1,12 @@
 <div *ngIf="(author$ | async) as author; else: loading">
   <app-author-edit-form *ngIf="isEditMode$ | async; else details;"
-    [author]="author" (saveAuthor)="save($event)" (cancelEdit)="cancelEdit($event)">
+    [author]="author" (saveAuthor)="save($event)" (cancelEdit)="cancelEdit($event)"
+    (redirectToAuthorsList)="redirectToAuthorsList($event)">
   </app-author-edit-form>
 
   <ng-template #details>
-    <app-author-details-form [author]="author" (edit)="edit($event)"></app-author-details-form>
+    <app-author-details-form [author]="author" (edit)="edit($event)"
+     (redirectToAuthorsList)="redirectToAuthorsList($event)"></app-author-details-form>
   </ng-template>
 </div>
 

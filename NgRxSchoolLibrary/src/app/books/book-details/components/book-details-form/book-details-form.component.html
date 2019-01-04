@@ -1,4 +1,4 @@
-<div>          
+<div>
   <h1 class="h3 mb-3 font-weight-normal text-center">
     Book Details
   </h1>
@@ -6,7 +6,7 @@
     <form [formGroup]="bookDetailsForm">
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Title:</label>
-        <div class="col-sm-9">                                   
+        <div class="col-sm-9">
           <label class="col-form-label">{{book.title}}</label>
         </div>
       </div>
@@ -40,13 +40,13 @@
       </div>
 
       <div class="form-group row">
-        <div class="col-sm-offset-3 col-sm-9">        
+        <div class="col-sm-offset-3 col-sm-9">
           <span *ngIf="showEditButton" [ngStyle]="{'margin-right': '10px'}">
             <button type="button" class="btn btn-primary" (click)="edit.emit()">Edit</button>
-          </span>        
-          <button type="button" class="btn btn-secondary" (click)="redirectToBooksList()">Return</button>
+          </span>
+          <button type="button" class="btn btn-secondary" (click)="redirectToBooksList.emit()">Return</button>
         </div>
       </div>
     </form>
-  </div>          
+  </div>
 </div>

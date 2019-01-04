@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IUser } from '../../../models/user.model';
 import { IUserRole } from '../../../models/user-role.model';
-import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { IUserUpdateResult } from '../../../models/user-update-result.model';
 
@@ -41,6 +40,7 @@ export class UserEditFormComponent implements OnInit {
 
   @Output() saveUser = new EventEmitter<IUser>();
   @Output() cancelEdit = new EventEmitter<void>();
+  @Output() redirectToUsersList = new EventEmitter<void>();
 
   public userEditForm: FormGroup;
 
@@ -80,7 +80,7 @@ export class UserEditFormComponent implements OnInit {
     return this.userEditForm.get('role');
   }
 
-  constructor(private _router: Router, private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) { }
 
   ngOnInit() {
     this.userEditForm = this._fb.group({
@@ -97,10 +97,6 @@ export class UserEditFormComponent implements OnInit {
       dateOfBirth: [this.user.dateOfBirth],
       role: [+this.user.role, [Validators.required, idValidator]]
     });
-  }
-
-  public redirectToUsersList() {
-    this._router.navigate(['/administration/users']);
   }
 
   public save() {
