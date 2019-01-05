@@ -1,10 +1,10 @@
 <div class="panel">
-  <form [formGroup]="booksSearchPanelForm">      
-          <div *ngIf="showAddButton" class="form-group">               
+  <form [formGroup]="booksSearchPanelForm">
+          <div *ngIf="showAddButton" class="form-group">
               <div>
-                  <button [routerLink]="['/books/0']" class="btn btn-primary">Add</button>
-              </div>                
-          </div>      
+                  <button [routerLink]="['/books/0']" type="button" class="btn btn-primary">Add</button>
+              </div>
+          </div>
       <div class="form-row">
           <div class="col-md-6 mb-3">
               <label>Title:</label>
@@ -25,8 +25,8 @@
               <label>Publisher:</label>
               <div>
               <select formControlName="publisherID" class="form-control">
-                <option [value]="0">-- ALL --</option> 
-                <option *ngFor="let publisher of publishers" [value]="publisher.publisherID">{{publisher.name}}</option>                 
+                <option [value]="0">-- ALL --</option>
+                <option *ngFor="let publisher of publishers" [value]="publisher.publisherID">{{publisher.name}}</option>
               </select>
               </div>
           </div>

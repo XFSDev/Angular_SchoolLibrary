@@ -1,9 +1,9 @@
 <div class="panel">
     <form class="form-horizontal" [formGroup]="usersSearchPanelForm">
-        <div class="form-group">               
+        <div class="form-group">
             <div>
-                <button [routerLink]="['/administration/users/0']" class="btn btn-primary">Add</button>
-            </div>                
+                <button [routerLink]="['/administration/users/0']" type="button" class="btn btn-primary">Add</button>
+            </div>
         </div>
         <div class="form-row">
             <div class="col-md-4 mb-3">
@@ -23,20 +23,20 @@
                 <div>
                     <input type="text" formControlName="address" class="form-control" />
                 </div>
-            </div>           
+            </div>
         </div>
-        <div class="form-group">                    
-            <div class="form-check"  >  
-                  <ng-container formArrayName="userRoles" 
+        <div class="form-group">
+            <div class="form-check"  >
+                  <ng-container formArrayName="userRoles"
                       *ngFor="let role of roles.controls; let i=index;">
                       <ng-container [formGroupName]="i" >
                               <label [ngStyle]="{'margin-right': '10px'}">
                                   <input type="checkbox" formControlName="selected" />
                                   {{role.controls.name.value}}
-                              </label>     
+                              </label>
                       </ng-container>
-                  </ng-container>                       
+                  </ng-container>
             </div>
-        </div>      
+        </div>
     </form>
 </div>

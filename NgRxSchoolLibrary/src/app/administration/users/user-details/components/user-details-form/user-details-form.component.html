@@ -56,9 +56,9 @@
       <div class="form-group row">
         <div class="col-sm-offset-3 col-sm-9">
           <span [ngStyle]="{'margin-right': '20px'}">
-            <button class="btn btn-primary" (click)="edit.emit()">Edit</button>
+            <button class="btn btn-primary" type="button" (click)="edit.emit()">Edit</button>
           </span>
-          <button class="btn btn-secondary" (click)="redirectToUsersList.emit()">Return</button>
+          <button class="btn btn-secondary" type="button" (click)="redirectToUsersList.emit()">Return</button>
         </div>
       </div>
     </form>

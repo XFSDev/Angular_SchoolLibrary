@@ -45,8 +45,10 @@
                   <ng-container *ngIf="!author.authorID || author.authorID === 0">Add</ng-container>
                 </button>
             </span>
-            <button *ngIf="!author.authorID || author.authorID === 0" class="btn btn-secondary" (click)="redirectToAuthorsList.emit()">Return</button>
-            <button *ngIf="author.authorID && author.authorID > 0" class="btn btn-secondary" (click)="cancelEdit.emit()">Cancel</button>
+            <button *ngIf="!author.authorID || author.authorID === 0" type="button" class="btn btn-secondary"
+            (click)="redirectToAuthorsList.emit()">Return</button>
+            <button *ngIf="author.authorID && author.authorID > 0" type="button" class="btn btn-secondary"
+              (click)="cancelEdit.emit()">Cancel</button>
         </div>
       </div>
     </form>

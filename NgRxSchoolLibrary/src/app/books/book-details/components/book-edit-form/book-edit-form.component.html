@@ -67,8 +67,10 @@
                   <ng-container *ngIf="!book.bookID || book.bookID === 0">Add</ng-container>
                 </button>
             </span>
-            <button *ngIf="!book.bookID || book.bookID === 0" class="btn btn-secondary" (click)="redirectToBooksList.emit()">Return</button>
-            <button *ngIf="book.bookID && book.bookID > 0" class="btn btn-secondary" (click)="cancelEdit.emit()">Cancel</button>
+            <button *ngIf="!book.bookID || book.bookID === 0" type="button" class="btn btn-secondary"
+              (click)="redirectToBooksList.emit()">Return</button>
+            <button *ngIf="book.bookID && book.bookID > 0" type="button" class="btn btn-secondary"
+              (click)="cancelEdit.emit()">Cancel</button>
         </div>
       </div>
     </form>
