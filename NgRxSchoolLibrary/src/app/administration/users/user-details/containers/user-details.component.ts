@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { IUserRole } from '../../models/user-role.model';
 import { IUser } from '../../models/user.model';
 import { IUserUpdateResult } from '../../models/user-update-result.model';
@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
-  styleUrls: ['./user-details.component.css']
+  styleUrls: ['./user-details.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserDetailsComponent implements OnInit, OnDestroy {
   public isEditMode$: Observable<boolean>;

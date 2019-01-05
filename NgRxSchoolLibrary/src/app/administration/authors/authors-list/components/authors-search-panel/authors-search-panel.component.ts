@@ -1,11 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IAuthorSearchFilter } from '../../../models/authors-search-filter.model';
 
 @Component({
   selector: 'app-authors-search-panel',
   templateUrl: './authors-search-panel.component.html',
-  styleUrls: ['./authors-search-panel.component.css']
+  styleUrls: ['./authors-search-panel.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthorsSearchPanelComponent implements OnInit {
   @Input() authorsSearchFilter: IAuthorSearchFilter;

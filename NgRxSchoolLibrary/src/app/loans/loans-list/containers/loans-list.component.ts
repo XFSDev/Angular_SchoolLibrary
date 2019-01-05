@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ILoanSearchFilter } from '../../models/loan-search-filter.model';
 import { ILoan } from '../../models/loan.model';
 import { ILoanEvent } from '../../models/loan-event.model';
@@ -14,7 +14,8 @@ import { takeWhile } from 'rxjs/operators';
   // tslint:disable-next-line:component-selector
   selector: 'app-loans-list',
   templateUrl: './loans-list.component.html',
-  styleUrls: ['./loans-list.component.css']
+  styleUrls: ['./loans-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansListComponent implements OnInit, OnDestroy {
   private _componentActive: boolean;

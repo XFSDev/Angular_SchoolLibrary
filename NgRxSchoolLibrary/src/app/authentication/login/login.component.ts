@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ILogin } from '../login/login.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -10,7 +10,8 @@ import { tap } from 'rxjs/operators';
   // tslint:disable-next-line:component-selector
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;

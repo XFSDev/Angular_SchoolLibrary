@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { IUser } from '../../../models/user.model';
 import { IUserRole } from '../../../models/user-role.model';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
@@ -31,7 +31,8 @@ function requiredPasswordValidator(userID: number): ValidatorFn {
 @Component({
   selector: 'app-user-edit-form',
   templateUrl: './user-edit-form.component.html',
-  styleUrls: ['./user-edit-form.component.css']
+  styleUrls: ['./user-edit-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserEditFormComponent implements OnInit {
   @Input() user: IUser;

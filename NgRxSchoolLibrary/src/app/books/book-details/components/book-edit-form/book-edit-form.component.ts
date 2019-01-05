@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { IBook } from '../../../models/book.model';
 import { IAuthor } from '../../../../shared/models/author.model';
 import { IPublisher } from '../../../../shared/models/publisher.model';
@@ -7,7 +7,8 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 @Component({
   selector: 'app-book-edit-form',
   templateUrl: './book-edit-form.component.html',
-  styleUrls: ['./book-edit-form.component.css']
+  styleUrls: ['./book-edit-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BookEditFormComponent implements OnInit {
   @Input() book: IBook;

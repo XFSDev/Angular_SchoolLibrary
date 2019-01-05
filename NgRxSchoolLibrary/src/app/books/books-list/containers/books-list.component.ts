@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 
 import { IPublisher } from '../../../shared/models/publisher.model';
 import { IAuthor } from '../../../shared/models/author.model';
@@ -18,7 +18,8 @@ import { AuthenticationFacade } from 'src/app/authentication/state/authenticatio
   // tslint:disable-next-line:component-selector
   selector: 'app-books-list',
   templateUrl: './books-list.component.html',
-  styleUrls: ['./books-list.component.css']
+  styleUrls: ['./books-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BooksListComponent implements OnInit, OnDestroy {
   private _componentActive: boolean;

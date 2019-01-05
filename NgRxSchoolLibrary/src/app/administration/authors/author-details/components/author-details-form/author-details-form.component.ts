@@ -1,11 +1,12 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IAuthor } from 'src/app/shared/models/author.model';
 
 @Component({
   selector: 'app-author-details-form',
   templateUrl: './author-details-form.component.html',
-  styleUrls: ['./author-details-form.component.css']
+  styleUrls: ['./author-details-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthorDetailsFormComponent implements OnInit {
 

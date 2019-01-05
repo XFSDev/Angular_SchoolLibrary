@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { IPublisherSearchFilter } from '../../models/publishers-search-filter.model';
 import { IPublisher } from '../../../../shared/models/publisher.model';
 
@@ -12,7 +12,8 @@ import { takeWhile } from 'rxjs/operators';
 @Component({
   selector: 'app-publishers-list',
   templateUrl: './publishers-list.component.html',
-  styleUrls: ['./publishers-list.component.css']
+  styleUrls: ['./publishers-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PublishersListComponent implements OnInit, OnDestroy {
   private _componentActive: boolean;

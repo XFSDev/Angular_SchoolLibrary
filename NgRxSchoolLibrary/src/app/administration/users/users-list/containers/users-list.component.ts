@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { IUserSearchFilter } from '../../models/users-search-filter.model';
 import { IUser } from '../../models/user.model';
 import { UserSortColumns } from '../../models/user-sort-columns';
@@ -10,7 +10,8 @@ import { takeWhile } from 'rxjs/operators';
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.css']
+  styleUrls: ['./users-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersListComponent implements OnInit, OnDestroy {
   private _componentActive: boolean;

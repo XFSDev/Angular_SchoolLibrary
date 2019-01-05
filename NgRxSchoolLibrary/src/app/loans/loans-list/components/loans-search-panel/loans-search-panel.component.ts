@@ -1,11 +1,12 @@
-import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { ILoanSearchFilter } from '../../../models/loan-search-filter.model';
 
 @Component({
   selector: 'app-loans-search-panel',
   templateUrl: './loans-search-panel.component.html',
-  styleUrls: ['./loans-search-panel.component.css']
+  styleUrls: ['./loans-search-panel.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansSearchPanelComponent implements OnInit {
   @Input() filter: ILoanSearchFilter;

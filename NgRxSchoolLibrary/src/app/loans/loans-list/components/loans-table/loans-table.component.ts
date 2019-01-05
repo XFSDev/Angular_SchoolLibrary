@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { BookStatuses } from '../../../../shared/models/book-statuses';
 import { ILoan } from '../../../models/loan.model';
 import { ILoanEvent } from '../../../models/loan-event.model';
@@ -8,7 +8,8 @@ import { LoanSortColumns } from '../../../models/loan-sort-columns';
 @Component({
   selector: 'app-loans-table',
   templateUrl: './loans-table.component.html',
-  styleUrls: ['./loans-table.component.css']
+  styleUrls: ['./loans-table.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansTableComponent implements OnInit {
   @Input() loans: Array<ILoan>;

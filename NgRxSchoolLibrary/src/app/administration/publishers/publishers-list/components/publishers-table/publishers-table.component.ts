@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { IPublisher } from '../../../../../shared/models/publisher.model';
 
 import { PublisherSortColumns } from '../../../models/publisher-sort-columns';
@@ -6,7 +6,8 @@ import { PublisherSortColumns } from '../../../models/publisher-sort-columns';
 @Component({
   selector: 'app-publishers-table',
   templateUrl: './publishers-table.component.html',
-  styleUrls: ['./publishers-table.component.css']
+  styleUrls: ['./publishers-table.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PublishersTableComponent implements OnInit {
   @Input() publishers: IPublisher[];

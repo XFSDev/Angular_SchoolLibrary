@@ -1,11 +1,12 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { IPublisher } from '../../../../../shared/models/publisher.model';
 import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-publisher-details-form',
   templateUrl: './publisher-details-form.component.html',
-  styleUrls: ['./publisher-details-form.component.css']
+  styleUrls: ['./publisher-details-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PublisherDetailsFormComponent implements OnInit {
   @Input() publisher: IPublisher;

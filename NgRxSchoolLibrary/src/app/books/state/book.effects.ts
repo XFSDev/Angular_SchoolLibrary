@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BooksService } from '../books.service';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { mergeMap, map, tap, switchMap, withLatestFrom } from 'rxjs/operators';
+import { mergeMap, map, tap, switchMap, withLatestFrom, catchError } from 'rxjs/operators';
 import * as bookActions from './book.actions';
 import { IBook } from '../models/book.model';
 import { LoansService } from '../../loans/loans.service';
 import { Router } from '@angular/router';
-import { of, Observable, pipe } from 'rxjs';
+import { of, Observable, pipe, empty } from 'rxjs';
 import { getRouterParams } from 'src/app/state/app.reducer';
 import { Action, Store, select } from '@ngrx/store';
 import { getBooksSortCriteria } from './book.reducer';
@@ -26,7 +26,13 @@ export class BookEffects {
     ofType(bookActions.ActionTypes.LoadBooks),
     mergeMap(() => this._bookService
         .getBooks()
-        .pipe(map((books: IBook[]) => new bookActions.LoadBooksSuccessAction(books)))
+        .pipe(
+          map((books: IBook[]) => new bookActions.LoadBooksSuccessAction(books)),
+          catchError((err, caught) => {
+            // error handled by http interceptor
+            return empty();
+          })
+        )
     )
   );
 
@@ -63,7 +69,11 @@ export class BookEffects {
               .pipe(
                 map(
                   (book: IBook) => new bookActions.LoadBookSuccessAction(book)
-                )
+                ),
+                catchError((err, caught) => {
+                  // error handled by http interceptor
+                  return empty();
+                })
               )
           : of(
               new bookActions.LoadBookSuccessAction({
@@ -90,7 +100,13 @@ export class BookEffects {
     mergeMap((action: bookActions.RequestBookAction) =>
       this._loanService
         .requestBook(action.payload)
-        .pipe(map(() => new bookActions.RequestBookSuccessShowInfoAction(true)))
+        .pipe(
+          map(() => new bookActions.RequestBookSuccessShowInfoAction(true)),
+          catchError((err, caught) => {
+            // error handled by http interceptor
+            return empty();
+          })
+        )
     )
   );
 
@@ -100,7 +116,13 @@ export class BookEffects {
     mergeMap((action: bookActions.DeleteBookAction) =>
       this._bookService
         .deleteBook(action.payload)
-        .pipe(map(() => new bookActions.DeleteBookSuccessShowInfoAction(true)))
+        .pipe(
+          map(() => new bookActions.DeleteBookSuccessShowInfoAction(true)),
+          catchError((err, caught) => {
+            // error handled by http interceptor
+            return empty();
+          })
+        )
     )
   );
 
@@ -110,7 +132,13 @@ export class BookEffects {
     mergeMap((action: bookActions.SaveBookAction) =>
       this._bookService
         .updateBook(action.payload)
-        .pipe(tap(() => this._router.navigate(['/books'])))
+        .pipe(
+          tap(() => this._router.navigate(['/books'])),
+          catchError((err, caught) => {
+            // error handled by http interceptor
+            return empty();
+          })
+        )
     )
   );
 }

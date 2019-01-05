@@ -1,11 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { IAuthor } from 'src/app/shared/models/author.model';
 
 @Component({
   selector: 'app-author-edit-form',
   templateUrl: './author-edit-form.component.html',
-  styleUrls: ['./author-edit-form.component.css']
+  styleUrls: ['./author-edit-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthorEditFormComponent implements OnInit {
   @Input() author: IAuthor;

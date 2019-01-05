@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { IBook } from '../../models/book.model';
 import { IAuthor } from '../../../shared/models/author.model';
 import { IPublisher } from '../../../shared/models/publisher.model';
@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-book-details',
   templateUrl: './book-details.component.html',
-  styleUrls: ['./book-details.component.css']
+  styleUrls: ['./book-details.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BookDetailsComponent implements OnInit, OnDestroy {
   public isEditMode$: Observable<boolean>;

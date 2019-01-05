@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { IPublisher } from '../../../../shared/models/publisher.model';
 import { Observable } from 'rxjs';
 import { PublishersFacade } from '../../state/publishers.facade';
@@ -7,7 +7,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-publisher-details',
   templateUrl: './publisher-details.component.html',
-  styleUrls: ['./publisher-details.component.css']
+  styleUrls: ['./publisher-details.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PublisherDetailsComponent implements OnInit, OnDestroy {
   public isEditMode$: Observable<boolean>;

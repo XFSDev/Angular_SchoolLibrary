@@ -1,11 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { IUser } from '../../../models/user.model';
 import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-user-details-form',
   templateUrl: './user-details-form.component.html',
-  styleUrls: ['./user-details-form.component.css']
+  styleUrls: ['./user-details-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserDetailsFormComponent implements OnInit {
 

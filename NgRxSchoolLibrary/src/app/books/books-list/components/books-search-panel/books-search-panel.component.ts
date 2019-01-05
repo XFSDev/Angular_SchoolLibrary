@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IPublisher } from '../../../../shared/models/publisher.model';
 import { IAuthor } from '../../../../shared/models/author.model';
@@ -8,7 +8,8 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-books-search-panel',
   templateUrl: './books-search-panel.component.html',
-  styleUrls: ['./books-search-panel.component.css']
+  styleUrls: ['./books-search-panel.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BooksSearchPanelComponent implements OnInit, OnChanges {
   @Input() filter: IBookSearchFilter;

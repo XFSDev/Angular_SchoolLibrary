@@ -1,11 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { IUserSearchFilter } from '../../../models/users-search-filter.model';
 
 @Component({
   selector: 'app-users-search-panel',
   templateUrl: './users-search-panel.component.html',
-  styleUrls: ['./users-search-panel.component.css']
+  styleUrls: ['./users-search-panel.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersSearchPanelComponent implements OnInit {
   @Input() filter: IUserSearchFilter;
